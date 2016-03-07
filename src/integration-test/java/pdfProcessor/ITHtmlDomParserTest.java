@@ -1,28 +1,82 @@
 package pdfProcessor;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.file.Files;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import htmlParser.Config;
+import htmlParser.DomParser;
+import htmlParser.HtmlFileFilter;
+
+import static org.assertj.core.api.Assertions.*;
+
 public class ITHtmlDomParserTest {
+	private static final String PARA_MARKED_REFERENCE_TXT = "testParaMarked.txt";
 	private File inputFile;
 	private File referenceOutputFile;
-	private File outputFile;
+	
 	@Before
 	public void setup() {
 		ClassLoader classLoader = getClass().getClassLoader();
+		Config config = new Config(false);
+		HtmlFileFilter.setConfig(config);
 		inputFile = new File(classLoader.getResource("input/test.html").getFile());
-		referenceOutputFile = new File(classLoader.getResource("output/test.txt").getFile());
 	}
 	
 	@Test
-	public void DomParserShouldSuccessfullyExtractTextFromInput(){
+	public void DomParserShouldSuccessfullyExtractTextFromInputWithParagraph()
+			throws IOException {
+
+		HtmlFileFilter.getConfig().setParagraphForBold(true);
+		HtmlFileFilter.getConfig().setParagraphForColoured(true);
+		DomParser domparser = new DomParser(inputFile.getAbsolutePath());
+		
+		String outputResponse = domparser.getPages();
+		
+		assertOutputResponseIsCorrect(outputResponse, PARA_MARKED_REFERENCE_TXT);
+	}
+	
+	
+	@Test
+	public void DomParserShouldSuccessfullyExtractTextFromInputWithoutParagraph()
+			throws IOException {
+
+		HtmlFileFilter.getConfig().setParagraphForBold(false);
+		HtmlFileFilter.getConfig().setParagraphForColoured(false);
+		DomParser domparser = new DomParser(inputFile.getAbsolutePath());
+		
+		String outputResponse = domparser.getPages();
+		
+		assertOutputResponseIsCorrect(outputResponse, "testPlain.txt");
 	}
 
 	@Test
-	public void IntegrationTestShouldRunSuccessfullyAndOutputToConsole(){
+	public void IntegrationTestShouldRunSuccessfullyAndOutputToConsole() {
 		System.out.println("Integration tests Running");
+	}
+	
+	@After
+	public void CleanUp() {
+		HtmlFileFilter.setConfig(null);
+	}
+
+	private void assertOutputResponseIsCorrect(String outputResponse, String referenceFile)
+			throws IOException {
+		FileOutputStream outputStream = new FileOutputStream("/tmp/output.txt");
+		outputStream.write(outputResponse.getBytes());
+		outputStream.close();
+		ClassLoader classLoader = getClass().getClassLoader();
+		referenceOutputFile = new File(classLoader.getResource("output/" + referenceFile).getFile());
+		String referenceOutput = new String(
+				Files.readAllBytes(
+						referenceOutputFile.toPath()));
+		assertThat(outputResponse).isEqualTo(referenceOutput);
 	}
 
 }

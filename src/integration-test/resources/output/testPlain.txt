@@ -64,19 +64,22 @@ C
 
 HAPTER
 
-{para}
 
 2.1Kingdom Monera
-{para}
+
+2.2Kingdom Protista
 
 2.3Kingdom Fungi
-{para}
+
+2.4Kingdom Plantae
 
 2.5Kingdom
-{para}
+
+Animalia
 
 2.6Viruses, Viroids
-{para}
+
+and Lichens
 
 2015-16(19/01/2015)
 
@@ -258,7 +261,6 @@ Saprophytic
 etc.)
 
 TABLE 2.1Characteristics of the Five Kingdoms
-{para}
 
 2015-16(19/01/2015)
 
@@ -302,7 +304,6 @@ Protista and Fungi of the Whittaker system of classification. The Kingdoms
 Plantae and Animalia, commonly referred to as plant and animal
 
 kingdoms, respectively, will be dealt with separately in chapters 3 and 4.
-{para}
 
 2.1KINGDOM MONERA
 
@@ -339,7 +340,6 @@ spherical Coccus (pl.: cocci), the rod-shaped Bacillus (pl.: bacilli), the
 comma-shaped Vibrium (pl.: vibrio) and the spiral Spirillum (pl.: spirilla)
 
 (Figure 2.1).
-{para}
 
 2015-16(19/01/2015)
 
@@ -361,7 +361,6 @@ The vast majority of bacteria are heterotrophs, i.e., they do not synthesise
 their own food but depend on other organisms or on dead organic matter
 
 for food.
-{para}
 
 2.1.1Archaebacteria
 
@@ -384,7 +383,6 @@ animals.
 Figure 2.2A filamentous blue-green
 
 algae - Nostoc
-{para}
 
 2.1.2Eubacteria
 
@@ -433,7 +431,6 @@ Many of them have a significant impact on human
 affairs. They are helpful in making curd from milk,
 
 production of antibiotics, fixing nitrogen in legume
-{para}
 
 2015-16(19/01/2015)
 
@@ -467,7 +464,6 @@ completely lack a cell wall. They are the smallest
 living cells known and can survive without oxygen. Many mycoplasma
 
 are pathogenic in animals and plants.
-{para}
 
 2.2KINGDOM PROTISTA
 
@@ -490,7 +486,6 @@ nucleus and other membrane-bound organelles. Some have flagella or
 cilia. Protists reproduce asexually and sexually by a process involving
 
 cell fusion and zygote formation.
-{para}
 
 2.2.1Chrysophytes
 
@@ -515,13 +510,11 @@ soil is used in polishing, filtration of oils and syrups. Diatoms are the
 chief 'producers' in the oceans.
 
 Figure 2.3 A dividing bacterium
-{para}
 
 2015-16(19/01/2015)
 
 {sect}
 
-{para}
 
 2.2.2Dinoflagellates
 
@@ -546,7 +539,6 @@ sea appear red (red tides). Toxins released by such large
 numbers may even kill other marine animals such as
 
 fishes.
-{para}
 
 2.2.3Euglenoids
 
@@ -567,7 +559,6 @@ predating on other smaller organisms. Interestingly, the
 pigments of euglenoids are identical to those present in
 
 higher plants. Example: Euglena (Figure 2.4a).
-{para}
 
 2.2.4Slime Moulds
 
@@ -590,7 +581,6 @@ They are extremely resistant and survive for many years,
 even under adverse conditions. The spores are dispersed
 
 by air currents.
-{para}
 
 2.2.5Protozoans
 
@@ -611,7 +601,6 @@ Figure 2.4(a) Euglena
 (b)
 
 (a)
-{para}
 
 2015-16(19/01/2015)
 
@@ -647,7 +636,6 @@ spore-like stage in their life cycle. The most notorious is Plasmodium
 (malarial parasite) which causes malaria, a disease which has a staggering
 
 effect on human population.
-{para}
 
 2.3KINGDOM FUNGI
 
@@ -700,7 +688,6 @@ plants as mycorrhiza.
 Reproduction in fungi can take place by vegetative means -
 
 fragmentation, fission and budding. Asexual reproduction is by spores
-{para}
 
 2015-16(19/01/2015)
 
@@ -750,7 +737,6 @@ The morphology of the mycelium, mode of spore
 formation and fruiting bodies form the basis for the
 
 division of the kingdom into various classes.
-{para}
 
 2.3.1Phycomycetes
 
@@ -777,7 +763,6 @@ examples are Mucor (Figure 2.5a), Rhizopus (the bread
 mould mentioned earlier) and Albugo (the parasitic fungi
 
 on mustard).
-{para}
 
 2.3.2Ascomycetes
 
@@ -798,7 +783,6 @@ Figure 2.5Fungi: (a) Mucor
 (a)
 
 (b)
-{para}
 
 2015-16(19/01/2015)
 
@@ -820,7 +804,6 @@ Some examples are Aspergillus (Figure 2.5b), Claviceps and Neurospora.
 Neurospora is used extensively in biochemical and genetic work. Many
 
 members like morels and truffles are edible and are considered delicacies.
-{para}
 
 2.3.3Basidiomycetes
 
@@ -849,7 +832,6 @@ arranged in fruiting bodies called basidiocarps. Some common members
 are Agaricus (mushroom) (Figure 2.5c), Ustilago (smut) and Puccinia (rust
 
 fungus).
-{para}
 
 2.3.4Deuteromycetes
 
@@ -880,13 +862,11 @@ are saprophytes or parasites while a large number of them are
 decomposers of litter and help in mineral cycling. Some examples are
 
 Alternaria, Colletotrichum and Trichoderma.
-{para}
 
 2015-16(19/01/2015)
 
 {sect}
 
-{para}
 
 2.4KINGDOM PLANTAE
 
@@ -917,7 +897,6 @@ living or dependent on others, vary among different groups in plants.
 This phenomenon is called alternation of generation. You will study
 
 further details of this kingdom in Chapter 3.
-{para}
 
 2.5KINGDOM ANIMALIA
 
@@ -942,7 +921,6 @@ The sexual reproduction is by copulation of male and female followed
 by embryological development. Salient features of various phyla are
 
 described in Chapter 4.
-{para}
 
 2.6VIRUSES, VIROIDSAND LICHENS
 
@@ -963,7 +941,6 @@ truly 'living', if we understand living as those organisms that have a cell
 structure. The viruses are non-cellular organisms that are characterised
 
 by having an inert crystalline structure outside the living cell. Once they
-{para}
 
 2015-16(19/01/2015)
 
@@ -1037,13 +1014,11 @@ Collar
 (b)
 
 Figure 2.6  (a) Tobacco Mosaic Virus (TMV) (b) Bacteriophage
-{para}
 
 2015-16(19/01/2015)
 
 {sect}
 
-{para}
 
 SUMMARY
 
@@ -1120,13 +1095,11 @@ So close is their association that if one saw a lichen in nature one would
 never imagine that they had two different organisms within them. Lichens
 
 are very good pollution indicators - they do not grow in polluted areas.
-{para}
 
 2015-16(19/01/2015)
 
 {sect}
 
-{para}
 
 EXERCISES
 
@@ -1169,7 +1142,5 @@ genetic material. Also name four common viral diseases.
 12.Organise a discussion in your class on the topic - Are viruses living or non-
 
 living?
-{para}
 
 2015-16(19/01/2015)
-

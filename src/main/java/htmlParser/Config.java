@@ -21,6 +21,8 @@ public class Config {
 	private boolean isMixedLanguage = false;
 	private String inputFolder;
 	private String outputFolder;
+	private boolean paragraphForBold;
+	private boolean paragraphForColoured;
 
 	public Config() {
 	}
@@ -69,6 +71,22 @@ public class Config {
 
 	private static String getFontClass(String font) {
 		return hindiFontClasses.get(font);
+	}
+
+	public boolean isParagraphForBold() {
+		return paragraphForBold;
+	}
+
+	public void setParagraphForBold(boolean paragraphForBold) {
+		this.paragraphForBold = paragraphForBold;
+	}
+
+	public boolean isParagraphForColoured() {
+		return paragraphForColoured;
+	}
+
+	public void setParagraphForColoured(boolean paragraphForColoured) {
+		this.paragraphForColoured = paragraphForColoured;
 	}
 
 }

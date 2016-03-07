@@ -1,8 +1,10 @@
 package htmlParser;
 
+import java.awt.event.TextEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.jsoup.nodes.Element;
 
 public class Page {
@@ -73,17 +75,25 @@ public class Page {
 					? textEntity.getClasses().get("fs") : "";
 			if (!fontSizeClass.equals("fs0") || !pageHeaderFlag) {
 				pageHeaderFlag = false;
-				if ((textEntity.isBold() || textEntity.isColoured()) && i - prevBold > 1) {
-					text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text,
-							Constants.BLOCK_DECORATION_BOUNDARY);
-					text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text, textEntity.toString());
-					prevBold = i;
-				} else {
-					text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text, textEntity.toString());
+				if (HtmlFileFilter.getConfig().isParagraphForBold()
+						|| HtmlFileFilter.getConfig().isParagraphForColoured()) {
+					Pair<String, Integer> responsePair = addBoundaryToText(textEntity, text,
+							Constants.BLOCK_DECORATION_BOUNDARY, i, prevBold);
+					text = responsePair.getLeft();
+					prevBold = responsePair.getRight();
 				}
+				text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text, textEntity.toString());
 			}
 		}
 		return text;
+	}
+
+	private Pair<String, Integer> addBoundaryToText(Text textEntity, String text, String boundary, int index, int prevBold) {
+		if ((textEntity.isBold() || textEntity.isColoured()) && index - prevBold > 1) {
+			text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text, boundary);
+			prevBold = index;
+		}
+		return Pair.of(text, prevBold);
 	}
 
 	public boolean isEnglish() {

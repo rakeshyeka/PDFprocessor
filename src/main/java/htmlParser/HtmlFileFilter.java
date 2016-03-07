@@ -32,6 +32,14 @@ public class HtmlFileFilter {
 		}
 		Util.closeLogger();
 	}
+	
+	public static Config getConfig() {
+		return HtmlFileFilter.config;
+	}
+	
+	public static void setConfig(Config config) {
+		HtmlFileFilter.config = config;
+	}
 
 	public static void main(String[] args) throws IOException {
 		execute();
