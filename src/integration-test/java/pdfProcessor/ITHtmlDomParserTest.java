@@ -17,6 +17,7 @@ import htmlParser.HtmlFileFilter;
 import static org.assertj.core.api.Assertions.*;
 
 public class ITHtmlDomParserTest {
+	private static final String PLAIN_REFERENCE_TXT = "testPlain.txt";
 	private static final String PARA_MARKED_REFERENCE_TXT = "testParaMarked.txt";
 	private File inputFile;
 	private File referenceOutputFile;
@@ -53,7 +54,7 @@ public class ITHtmlDomParserTest {
 		
 		String outputResponse = domparser.getPages();
 		
-		assertOutputResponseIsCorrect(outputResponse, "testPlain.txt");
+		assertOutputResponseIsCorrect(outputResponse, PLAIN_REFERENCE_TXT);
 	}
 
 	@Test

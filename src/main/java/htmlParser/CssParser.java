@@ -34,55 +34,68 @@ public class CssParser {
 		List<String> boldFontClasses = vault.getBoldFontClasses();
 		Map<String, Boolean> colouredClasses = vault.getColouredClasses();
 		for (Element style : dom.getElementsByTag(Constants.STYLE_TAG)) {
-			String data = style.data();
-			if (data.contains(FONT_FACE) || data.contains(FONT_COLOUR)) {
-				InputSource source = new InputSource(new StringReader(data));
-				CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
-				CSSStyleSheet sheet;
-				try {
-					sheet = parser.parseStyleSheet(source, null, null);
-					CSSRuleList cssRules = sheet.getCssRules();
-					for (int i = 0; i < cssRules.getLength(); i++) {
-						CSSRule cssRule = cssRules.item(i);
-						String cssText = cssRule.getCssText();
-						String fontFamily = Util.substringRegex(cssText, FONT_FAMILY_PATTERN);
-						String fontData;
-						if (fontFamily != null) {
-							String fontDataEncoded = Util.substringRegex(cssText, BASE64_PATTERN);
-							if (fontDataEncoded != null) {
-								fontData = Util.decode(fontDataEncoded);
-								String convertorClass = Config.getHindiConvertorClass(fontData);
-								if (convertorClass != null
-										&& !hindiFontClasses.containsKey(fontFamily)) {
-									hindiFontClasses.put(fontFamily, convertorClass);
-								}
-								if (fontData.contains(BOLD) && !boldFontClasses.contains(fontFamily)) {
-									boldFontClasses.add(fontFamily);
-								}
-							}
-						}
-						String fcFamily = Util.substringRegex(cssText, FONT_COLOUR_FAMILY, 1);
-						if (fcFamily != null) {
-							String fontColor = Util.substringRegex(cssText, FONT_COLOUR_PATTERN);
-							if (fontColor == null) {
-								fontColor = Util.substringRegex(cssText, FONT_COLOUR_TRANSPARENT_PATTERN);
-							}
-							if (fontColor == null) {
-								System.out.println("ScrewedUp");
-							}
-							if (!colouredClasses.containsKey(fcFamily)) {
-								colouredClasses.put(fcFamily, Config.isColouredClass(fontColor));
-							}
-						}
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-	
+			extractCssFromStyleTag(hindiFontClasses, boldFontClasses, colouredClasses, style);
 		}
 		vault.setHindiFontClasses(hindiFontClasses);
 		vault.setBoldFontClasses(boldFontClasses);
 		vault.setColouredClasses(colouredClasses);
+	}
+
+	private static void extractCssFromStyleTag(Map<String, String> hindiFontClasses, List<String> boldFontClasses,
+			Map<String, Boolean> colouredClasses, Element style) {
+		String data = style.data();
+		if (data.contains(FONT_FACE) || data.contains(FONT_COLOUR)) {
+			InputSource source = new InputSource(new StringReader(data));
+			CSSOMParser parser = new CSSOMParser(new SACParserCSS3());
+			CSSStyleSheet sheet;
+			try {
+				sheet = parser.parseStyleSheet(source, null, null);
+				CSSRuleList cssRules = sheet.getCssRules();
+				for (int i = 0; i < cssRules.getLength(); i++) {
+					CSSRule cssRule = cssRules.item(i);
+					String cssText = cssRule.getCssText();
+					processCSStextForBoldAndHindiClasses(hindiFontClasses, boldFontClasses, cssText);
+					processCSStextForColouredClasses(colouredClasses, cssText);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private static void processCSStextForColouredClasses(Map<String, Boolean> colouredClasses, String cssText) {
+		String fcFamily = Util.substringRegex(cssText, FONT_COLOUR_FAMILY, 1);
+		if (fcFamily != null) {
+			String fontColor = Util.substringRegex(cssText, FONT_COLOUR_PATTERN);
+			if (fontColor == null) {
+				fontColor = Util.substringRegex(cssText, FONT_COLOUR_TRANSPARENT_PATTERN);
+			}
+			if (fontColor == null) {
+				System.out.println("ScrewedUp");
+			}
+			if (!colouredClasses.containsKey(fcFamily)) {
+				colouredClasses.put(fcFamily, Config.isColouredClass(fontColor));
+			}
+		}
+	}
+
+	private static void processCSStextForBoldAndHindiClasses(Map<String, String> hindiFontClasses,
+			List<String> boldFontClasses, String cssText) {
+		String fontFamily = Util.substringRegex(cssText, FONT_FAMILY_PATTERN);
+		String fontData;
+		if (fontFamily != null) {
+			String fontDataEncoded = Util.substringRegex(cssText, BASE64_PATTERN);
+			if (fontDataEncoded != null) {
+				fontData = Util.decode(fontDataEncoded);
+				String convertorClass = Config.getHindiConvertorClass(fontData);
+				if (convertorClass != null
+						&& !hindiFontClasses.containsKey(fontFamily)) {
+					hindiFontClasses.put(fontFamily, convertorClass);
+				}
+				if (fontData.contains(BOLD) && !boldFontClasses.contains(fontFamily)) {
+					boldFontClasses.add(fontFamily);
+				}
+			}
+		}
 	}
 }
