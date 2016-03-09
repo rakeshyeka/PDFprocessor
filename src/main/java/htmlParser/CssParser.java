@@ -2,8 +2,6 @@ package htmlParser;
 
 import java.io.IOException;
 import java.io.StringReader;
-import java.util.List;
-import java.util.Map;
 
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,25 +22,20 @@ public class CssParser {
 	private static final String FONT_COLOUR_FAMILY = "\\.(fc[0-9]+)";
 	private static final String FONT_COLOUR_PATTERN = "(?!\\.fc[0-9]+ \\{ color: rgb\\()[0-9]+, *[0-9]+, *[0-9]+(?=\\) \\})";
 	private static final String FONT_COLOUR_TRANSPARENT_PATTERN = "(?!\\.fc[0-9]+ \\{ color: )transparent(?= \\})";
+	
+	private static TextPropertyVault vault;
 
 	public CssParser() {
 	}
 
-	static void parseCssText(Document dom) {
-		TextPropertyVault vault = TextPropertyVault.getVault();
-		Map<String, String> hindiFontClasses = vault.getHindiFontClasses();
-		List<String> boldFontClasses = vault.getBoldFontClasses();
-		Map<String, Boolean> colouredClasses = vault.getColouredClasses();
+	public static void parseCssText(Document dom) {
+		vault = TextPropertyVault.getVault();
 		for (Element style : dom.getElementsByTag(Constants.STYLE_TAG)) {
-			extractCssFromStyleTag(hindiFontClasses, boldFontClasses, colouredClasses, style);
+			extractCssFromStyleTag(style);
 		}
-		vault.setHindiFontClasses(hindiFontClasses);
-		vault.setBoldFontClasses(boldFontClasses);
-		vault.setColouredClasses(colouredClasses);
 	}
 
-	private static void extractCssFromStyleTag(Map<String, String> hindiFontClasses, List<String> boldFontClasses,
-			Map<String, Boolean> colouredClasses, Element style) {
+	private static void extractCssFromStyleTag(Element style) {
 		String data = style.data();
 		if (data.contains(FONT_FACE) || data.contains(FONT_COLOUR)) {
 			InputSource source = new InputSource(new StringReader(data));
@@ -54,8 +47,8 @@ public class CssParser {
 				for (int i = 0; i < cssRules.getLength(); i++) {
 					CSSRule cssRule = cssRules.item(i);
 					String cssText = cssRule.getCssText();
-					processCSStextForBoldAndHindiClasses(hindiFontClasses, boldFontClasses, cssText);
-					processCSStextForColouredClasses(colouredClasses, cssText);
+					processCSStextForBoldAndHindiClasses(cssText);
+					processCSStextForColouredClasses(cssText);
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -63,7 +56,7 @@ public class CssParser {
 		}
 	}
 
-	private static void processCSStextForColouredClasses(Map<String, Boolean> colouredClasses, String cssText) {
+	private static void processCSStextForColouredClasses(String cssText) {
 		String fcFamily = Util.substringRegex(cssText, FONT_COLOUR_FAMILY, 1);
 		if (fcFamily != null) {
 			String fontColor = Util.substringRegex(cssText, FONT_COLOUR_PATTERN);
@@ -73,14 +66,13 @@ public class CssParser {
 			if (fontColor == null) {
 				System.out.println("ScrewedUp");
 			}
-			if (!colouredClasses.containsKey(fcFamily)) {
-				colouredClasses.put(fcFamily, Config.isColouredClass(fontColor));
+			if (!vault.getColouredClasses().containsKey(fcFamily)) {
+				vault.getColouredClasses().put(fcFamily, Config.isColouredClass(fontColor));
 			}
 		}
 	}
 
-	private static void processCSStextForBoldAndHindiClasses(Map<String, String> hindiFontClasses,
-			List<String> boldFontClasses, String cssText) {
+	private static void processCSStextForBoldAndHindiClasses(String cssText) {
 		String fontFamily = Util.substringRegex(cssText, FONT_FAMILY_PATTERN);
 		String fontData;
 		if (fontFamily != null) {
@@ -89,11 +81,11 @@ public class CssParser {
 				fontData = Util.decode(fontDataEncoded);
 				String convertorClass = Config.getHindiConvertorClass(fontData);
 				if (convertorClass != null
-						&& !hindiFontClasses.containsKey(fontFamily)) {
-					hindiFontClasses.put(fontFamily, convertorClass);
+						&& !vault.getHindiFontClasses().containsKey(fontFamily)) {
+					vault.getHindiFontClasses().put(fontFamily, convertorClass);
 				}
-				if (fontData.contains(BOLD) && !boldFontClasses.contains(fontFamily)) {
-					boldFontClasses.add(fontFamily);
+				if (fontData.contains(BOLD) && !vault.getBoldFontClasses().contains(fontFamily)) {
+					vault.getBoldFontClasses().add(fontFamily);
 				}
 			}
 		}
