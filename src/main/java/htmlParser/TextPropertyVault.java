@@ -10,11 +10,21 @@ public class TextPropertyVault {
 	private static Map<String, String> hindiFontClasses;
 	private static List<String> boldFontClasses;
 	private static Map<String, Boolean> colouredClasses;
+	private static Map<String, Float> xPositions;
+	private static Map<String, Float> yPositions;
+	private static Map<String, Float> fontSizes;
 
 	private TextPropertyVault() {
+		clearVault();
+	}
+
+	public static void clearVault() {
 		TextPropertyVault.setHindiFontClasses(new HashMap<String, String>());
 		TextPropertyVault.setBoldFontClasses(new ArrayList<String>());
 		TextPropertyVault.setColouredClasses(new HashMap<String, Boolean>());
+		TextPropertyVault.setXPositions(new HashMap<String, Float>());
+		TextPropertyVault.setYPositions(new HashMap<String, Float>());
+		TextPropertyVault.setFontSizes(new HashMap<String, Float>());
 	}
 
 	public static TextPropertyVault getVault() {
@@ -23,6 +33,30 @@ public class TextPropertyVault {
 
 	public static void setVault(TextPropertyVault vault) {
 		TextPropertyVault.vault = vault;
+	}
+
+	public static Map<String, Float> getXPositions() {
+		return xPositions;
+	}
+
+	public static void setXPositions(Map<String, Float> xPositions) {
+		TextPropertyVault.xPositions = xPositions;
+	}
+
+	public static Map<String, Float> getYPositions() {
+		return yPositions;
+	}
+
+	public static void setYPositions(Map<String, Float> yPositions) {
+		TextPropertyVault.yPositions = yPositions;
+	}
+
+	public static Map<String, Float> getFontSizes() {
+		return fontSizes;
+	}
+
+	public static void setFontSizes(Map<String, Float> fontSizes) {
+		TextPropertyVault.fontSizes = fontSizes;
 	}
 
 	public Map<String, String> getHindiFontClasses() {

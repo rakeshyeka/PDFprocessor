@@ -34,6 +34,10 @@ public class Text {
 
 	private String fontConvertor;
 
+	public Text(){
+
+	}
+
 	public Text(String data, boolean isHindi, boolean isBold, boolean isColoured, String fontConvertor) {
 		this.data = data;
 		this.isHindi = isHindi;
@@ -101,6 +105,17 @@ public class Text {
 		}
 		
 		return this.data;
+	}
+
+	public String getTextFeatures() {
+		String features = "";
+		String xPosition = TextPropertyVault.getXPositions().get(getClasses().get("x")).toString();
+		String yPosition = TextPropertyVault.getYPositions().get(getClasses().get("y")).toString();
+		String fontSizes = TextPropertyVault.getFontSizes().get(getClasses().get("fs")).toString();
+		features += xPosition + " ";
+		features += yPosition + " ";
+		features += fontSizes;
+		return features;
 	}
 
 	private void processNodeValue() {

@@ -78,14 +78,29 @@ public class HtmlFileFilter {
 
 	private static void parseFile(String inputFile, String outputFile) {
 		DomParser dom = new DomParser(inputFile);
-		PrintWriter out;
 		String pages = dom.getPages();
+		writeContentToFile(outputFile, pages);
+	}
+
+	private static void writeContentToFile(String fileName, String content) {
+		PrintWriter out;
 		try {
-			out = new PrintWriter(outputFile);
-			out.println(pages);
+			out = new PrintWriter(fileName);
+			out.println(content);
 			out.close();
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
+		}
+	}
+
+	private static void extractTextFeatures(String inputFile, String outputPath) {
+		DomParser domParser = new DomParser(inputFile);
+		while (domParser.getPagesIterator().hasNext()) {
+			Page page = domParser.getPagesIterator().next();
+			String pageTextFeatures = page.extractTextFeatures();
+			int pageNumber = page.getPageNumber();
+			String outputFile = Util.pathJoin(outputPath, Integer.toString(pageNumber));
+			writeContentToFile(outputFile, pageTextFeatures);
 		}
 	}
 

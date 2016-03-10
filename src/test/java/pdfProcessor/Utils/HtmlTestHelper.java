@@ -18,7 +18,7 @@ public class HtmlTestHelper {
 	}
 
 	private static String getHeadContent() {
-		return String.format(HEAD_TAG, CssTestHelper.generateRandomCssContent());
+		return String.format(HEAD_TAG, CssTestHelper.generateRandomCssContentWithStyleTags());
 	}
 
 	private static String getBodyContent() {
