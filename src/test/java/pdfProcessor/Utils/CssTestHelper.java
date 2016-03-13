@@ -8,9 +8,9 @@ public class CssTestHelper {
             "src:url('data:application/x-font-ttf;base64,%s')format(\"truetype\");}" +
             ".ff%s{font-family:ff%s;line-height:0.984000;font-style:normal;font-weight:normal;visibility:visible;}\n";
     private final static String FONT_COLOR_TAG = ".fc%s{color:rgb(171,171,171);}\n";
-    private final static String X_POSITION_TAG = ".x%s{left:%spt;}\n";
-    private final static String Y_POSITION_TAG = ".y%s{bottom:%spt;}\n";
-    private final static String FONT_SIZE_TAG = ".fs%s{font-size:%spt;}\n";
+    private final static String X_POSITION_TAG = ".x%s{left:%spx;}\n";
+    private final static String Y_POSITION_TAG = ".y%s{bottom:%spx;}\n";
+    private final static String FONT_SIZE_TAG = ".fs%s{font-size:%spx;}\n";
 
     public static String generateRandomCssContentWithStyleTags() {
         return String.format(STYLE_TAG, generateRandomCssContent());

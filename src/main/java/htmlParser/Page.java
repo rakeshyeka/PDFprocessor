@@ -28,9 +28,12 @@ public class Page {
 
 	public static List<Page> buildPageFromNodeList(Element element) {
 		List<Page> pageList = new ArrayList<Page>();
+		int pageNumber = 1;
 		for (Element child : element.getElementsByClass("pf")) {
 			Page page = new Page(child);
+			page.setPageNumber(pageNumber);
 			pageList.add(page);
+			pageNumber++;
 		}
 		return pageList;
 
