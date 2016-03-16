@@ -2,11 +2,10 @@ package pdfProcessor;
 
 import htmlParser.Config;
 import htmlParser.DomParser;
-import htmlParser.HtmlFileFilter;
+import htmlParser.HtmlToTextProcessor;
 import htmlParser.Page;
 import org.junit.Before;
 import org.junit.Test;
-import pdfProcessor.Utils.TestData;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class ITCssParserTest extends BaseTest{
     @Before
     public void setup() {
         Config config = new Config(false);
-        HtmlFileFilter.setConfig(config);
+        HtmlToTextProcessor.setConfig(config);
         inputFile = fetchResourceFileUsingClassLoader("input/test.html");
     }
 

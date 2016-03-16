@@ -1,6 +1,5 @@
 package htmlParser;
 
-import java.awt.event.TextEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -90,8 +89,8 @@ public class Page {
 					? textEntity.getClasses().get("fs") : "";
 			if (!fontSizeClass.equals("fs0") || !pageHeaderFlag) {
 				pageHeaderFlag = false;
-				if (HtmlFileFilter.getConfig().isParagraphForBold()
-						|| HtmlFileFilter.getConfig().isParagraphForColoured()) {
+				if (HtmlToTextProcessor.getConfig().isParagraphForBold()
+						|| HtmlToTextProcessor.getConfig().isParagraphForColoured()) {
 					Pair<String, Integer> responsePair = addBoundaryToText(textEntity, text,
 							Constants.BLOCK_DECORATION_BOUNDARY, i, prevBold);
 					text = responsePair.getLeft();

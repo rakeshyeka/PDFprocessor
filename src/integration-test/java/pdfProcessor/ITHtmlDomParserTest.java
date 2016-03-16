@@ -3,7 +3,6 @@ package pdfProcessor;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.file.Files;
 
 import org.junit.After;
 import org.junit.Before;
@@ -11,7 +10,7 @@ import org.junit.Test;
 
 import htmlParser.Config;
 import htmlParser.DomParser;
-import htmlParser.HtmlFileFilter;
+import htmlParser.HtmlToTextProcessor;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -24,7 +23,7 @@ public class ITHtmlDomParserTest extends BaseTest{
 	@Before
 	public void setup() {
 		Config config = new Config(false);
-		HtmlFileFilter.setConfig(config);
+		HtmlToTextProcessor.setConfig(config);
 		inputFile = fetchResourceFileUsingClassLoader("input/test.html");
 	}
 	
@@ -32,8 +31,8 @@ public class ITHtmlDomParserTest extends BaseTest{
 	public void DomParserShouldSuccessfullyExtractTextFromInputWithParagraph()
 			throws IOException {
 
-		HtmlFileFilter.getConfig().setParagraphForBold(true);
-		HtmlFileFilter.getConfig().setParagraphForColoured(true);
+		HtmlToTextProcessor.getConfig().setParagraphForBold(true);
+		HtmlToTextProcessor.getConfig().setParagraphForColoured(true);
 		DomParser domparser = new DomParser(inputFile.getAbsolutePath());
 		
 		String outputResponse = domparser.getPages();
@@ -46,8 +45,8 @@ public class ITHtmlDomParserTest extends BaseTest{
 	public void DomParserShouldSuccessfullyExtractTextFromInputWithoutParagraph()
 			throws IOException {
 
-		HtmlFileFilter.getConfig().setParagraphForBold(false);
-		HtmlFileFilter.getConfig().setParagraphForColoured(false);
+		HtmlToTextProcessor.getConfig().setParagraphForBold(false);
+		HtmlToTextProcessor.getConfig().setParagraphForColoured(false);
 		DomParser domparser = new DomParser(inputFile.getAbsolutePath());
 		
 		String outputResponse = domparser.getPages();
@@ -62,7 +61,7 @@ public class ITHtmlDomParserTest extends BaseTest{
 	
 	@After
 	public void CleanUp() {
-		HtmlFileFilter.setConfig(null);
+		HtmlToTextProcessor.setConfig(null);
 	}
 
 	private void assertOutputResponseIsCorrect(String outputResponse, String referenceFile)

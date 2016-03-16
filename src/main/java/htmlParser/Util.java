@@ -1,6 +1,8 @@
 package htmlParser;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -120,5 +122,20 @@ public class Util {
 			}
 			return true;
 		}
+	}
+
+	public static void writeContentToFile(String fileName, String content) {
+		PrintWriter out;
+		try {
+			out = new PrintWriter(fileName);
+			out.println(content);
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static String stripSlashes(String text) {
+		return StringUtils.strip(text, FILE_SEPERATOR);
 	}
 }
