@@ -1,5 +1,6 @@
 package pdfProcessor;
 
+import htmlParser.HtmlToTextProcessor;
 import htmlParser.TextPropertyVault;
 import org.mockito.MockitoAnnotations;
 import pdfProcessor.Utils.TextTestHelper;

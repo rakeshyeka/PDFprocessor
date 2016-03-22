@@ -1,8 +1,5 @@
 package htmlParser;
 
-import com.sun.org.apache.xerces.internal.impl.dv.xs.BooleanDV;
-import com.sun.org.apache.xpath.internal.operations.Bool;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -38,7 +35,7 @@ public abstract class FolderWalker {
 		// String inputFolder =
 		// "/home/rakesh/Copy/Constitution/Consttn/bilingual-constitution/tempPDF";
 		this.updateConfig();
-		this.parseFileInFolder(config.getInputFolder(), config.getOutputFolder());
+		this.parseFileInFolder(this.getConfig().getInputFolder(), this.getConfig().getOutputFolder());
 	}
 
 	protected static String getOutputFilePath(
@@ -113,7 +110,7 @@ public abstract class FolderWalker {
 			File childEntity = new File(Util.pathJoin(currentDirectoryPath, childName));
 			if (childEntity.isDirectory()) {
 				recurseDirectory(childEntity, inputDirectory, outputDirectory);
-			} else if (endsWithHTMLTag(childName)) {
+			} else if (endsWithHTMLFileExtension(childName)) {
 				String inputFilePath = Util.pathJoin(currentDirectoryPath, childName);
 				Util.logMessage(Level.INFO, String.format(CURRENT_FILE_INFO_TEMPLATE, inputFilePath));
 				processHTMLFile(inputFilePath, currentDirectoryPath, inputDirectory, outputDirectory);
@@ -121,7 +118,7 @@ public abstract class FolderWalker {
 		}
 	}
 
-	private Boolean endsWithHTMLTag(String fileName) {
+	private Boolean endsWithHTMLFileExtension(String fileName) {
 		Pattern xmlRegex = Pattern.compile(".html$");
 		Matcher m = xmlRegex.matcher(fileName);
 		return m.find();

@@ -13,6 +13,8 @@ public class TextPropertyVault {
 	private static Map<String, Float> xPositions;
 	private static Map<String, Float> yPositions;
 	private static Map<String, Float> fontSizes;
+	private static final String DEFAULT_FEATURE_LIST_FORMAT = "x y fs l";
+	private static String featureListFormat;
 
 	private TextPropertyVault() {
 		clearVault();
@@ -25,6 +27,7 @@ public class TextPropertyVault {
 		TextPropertyVault.setXPositions(new HashMap<String, Float>());
 		TextPropertyVault.setYPositions(new HashMap<String, Float>());
 		TextPropertyVault.setFontSizes(new HashMap<String, Float>());
+		TextPropertyVault.featureListFormat = null;
 	}
 
 	public static TextPropertyVault getVault() {
@@ -57,6 +60,14 @@ public class TextPropertyVault {
 
 	public static void setFontSizes(Map<String, Float> fontSizes) {
 		TextPropertyVault.fontSizes = fontSizes;
+	}
+
+	public static String getFeatureListFormat() {
+		return featureListFormat == null ? DEFAULT_FEATURE_LIST_FORMAT : featureListFormat;
+	}
+
+	public static void setFeatureListFormat(String featureListFormat) {
+		TextPropertyVault.featureListFormat = featureListFormat;
 	}
 
 	public Map<String, String> getHindiFontClasses() {

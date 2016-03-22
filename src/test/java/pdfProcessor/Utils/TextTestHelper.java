@@ -10,7 +10,8 @@ public class TextTestHelper {
 
 
     public static String populateRandomFeaturesInTextEntity(Text textEntity) {
-        textEntity.setData(TestData.randomString());
+        String textData = TestData.randomString();
+        textEntity.setData(textData);
         Map<String, String> classesMap = new HashMap<String, String>();
         String randomXPosition = getRandomKeyFromMap(TextPropertyVault.getXPositions());
         classesMap.put("x", randomXPosition);
@@ -19,10 +20,16 @@ public class TextTestHelper {
         String randomFontSize = getRandomKeyFromMap(TextPropertyVault.getFontSizes());
         classesMap.put("fs", randomFontSize);
         textEntity.setClasses(classesMap);
-        return String.format("%s %s %s",
-                TextPropertyVault.getXPositions().get(randomXPosition),
-                TextPropertyVault.getYPositions().get(randomYPosition),
-                TextPropertyVault.getFontSizes().get(randomFontSize));
+        String expectedFeatures = TextPropertyVault.getFeatureListFormat();
+        expectedFeatures = expectedFeatures.replace(
+                "x", TextPropertyVault.getXPositions().get(randomXPosition).toString());
+        expectedFeatures = expectedFeatures.replace(
+                "y", TextPropertyVault.getYPositions().get(randomYPosition).toString());
+        expectedFeatures = expectedFeatures.replace(
+                "fs", TextPropertyVault.getFontSizes().get(randomFontSize).toString());
+        expectedFeatures = expectedFeatures.replace(
+                "l", Integer.toString(textData.length()));
+        return expectedFeatures;
     }
 
     public static Map<String, Float> getRandomMap() {

@@ -88,5 +88,4 @@ public class Config {
 	public void setParagraphForColoured(boolean paragraphForColoured) {
 		this.paragraphForColoured = paragraphForColoured;
 	}
-
 }

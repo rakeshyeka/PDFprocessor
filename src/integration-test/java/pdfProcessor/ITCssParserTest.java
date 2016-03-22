@@ -1,9 +1,6 @@
 package pdfProcessor;
 
-import htmlParser.Config;
-import htmlParser.DomParser;
-import htmlParser.HtmlToTextProcessor;
-import htmlParser.Page;
+import htmlParser.*;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -19,6 +16,7 @@ public class ITCssParserTest extends BaseTest{
     public void setup() {
         Config config = new Config(false);
         HtmlToTextProcessor.setConfig(config);
+        TextPropertyVault.setFeatureListFormat("x y fs");
         inputFile = fetchResourceFileUsingClassLoader("input/test.html");
     }
 

@@ -14,6 +14,8 @@ public class HtmlToTextProcessor extends FolderWalker {
 		Config config = new Config(false);
 		config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
 		config.setOutputFolder("/home/rakesh/Copy/NCERT/03_Text/Current/Psychology");
+		config.setParagraphForBold(true);
+		config.setParagraphForColoured(true);
 		setConfig(config);
 	}
 
