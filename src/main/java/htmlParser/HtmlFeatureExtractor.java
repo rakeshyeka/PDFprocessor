@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.util.Iterator;
 
 public class HtmlFeatureExtractor extends FolderWalker {
+
+    public static final String OUTPUT_FILE_EXTENSION = ".csv";
+
     @Override
     public void updateConfig() {
         Config config = new Config(false);
         config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
         config.setOutputFolder("/home/rakesh/Copy/NCERT/03_5_Features/Current/Psychology");
-        TextPropertyVault.setFeatureListFormat("x y fs l");
+        TextPropertyVault.setFeatureListFormat("x, y, fs, l, fc, fb");
         this.setConfig(config);
     }
 
@@ -41,7 +44,7 @@ public class HtmlFeatureExtractor extends FolderWalker {
             fileName = fileName.replace(".html", "");
             String outputFile = Util.pathJoin(outputPath, fileName);
             outputFile = Util.pathJoin(outputFile, Integer.toString(pageNumber));
-            outputFile = outputFile + ".txt";
+            outputFile = outputFile + OUTPUT_FILE_EXTENSION;
             Util.writeContentToFile(outputFile, pageTextFeatures);
         }
     }

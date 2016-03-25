@@ -13,7 +13,7 @@ public class TextPropertyVault {
 	private static Map<String, Float> xPositions;
 	private static Map<String, Float> yPositions;
 	private static Map<String, Float> fontSizes;
-	private static final String DEFAULT_FEATURE_LIST_FORMAT = "x y fs l";
+	private static final String DEFAULT_FEATURE_LIST_FORMAT = "x y fs l fc fb";
 	private static String featureListFormat;
 
 	private TextPropertyVault() {
@@ -64,6 +64,10 @@ public class TextPropertyVault {
 
 	public static String getFeatureListFormat() {
 		return featureListFormat == null ? DEFAULT_FEATURE_LIST_FORMAT : featureListFormat;
+	}
+
+	public static String getDefaultFeatureListFormat() {
+		return DEFAULT_FEATURE_LIST_FORMAT;
 	}
 
 	public static void setFeatureListFormat(String featureListFormat) {

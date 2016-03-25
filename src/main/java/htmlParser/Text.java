@@ -15,6 +15,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -120,7 +121,13 @@ public class Text {
 		features = features.replace("y", yPosition);
 		features = features.replace("fs", fontSizes);
 		features = features.replace("l", textLength);
+		features = features.replace("fc", booleanToIntegerString(this.isColoured()));
+		features = features.replace("fb", booleanToIntegerString(this.isBold()));
 		return features;
+	}
+
+	private String booleanToIntegerString(Boolean bool) {
+		return Integer.toString(BooleanUtils.toInteger(bool));
 	}
 
 	private void processNodeValue() {
