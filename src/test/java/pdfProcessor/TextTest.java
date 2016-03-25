@@ -4,6 +4,7 @@ import htmlParser.Text;
 import htmlParser.TextPropertyVault;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
+import org.apache.commons.lang3.ArrayUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,7 +35,7 @@ public class TextTest extends BaseTest{
 
     @Test
     @Parameters(method = "getFeatureListFormats")
-    public void getTextWithSpecificFeaturesShouldReturnStringOfRequiredFeatures(
+    public void getTextFeaturesShouldReturnStringOfRequiredFeatures(
             String featureListFormat) {
         int featureListSize = featureListFormat.split(" ").length;
         TextPropertyVault.setFeatureListFormat(featureListFormat);
@@ -47,11 +48,14 @@ public class TextTest extends BaseTest{
     }
 
     private Object[] getFeatureListFormats (){
-        return new Object[] {
+        String[] defaultFeatures = TextPropertyVault.getDefaultFeatureListFormat().split(" ");
+        Object[] objectArray = new Object[] {
                 "x y",
                 "x fs",
                 "y x",
-                "fs x y"
+                "fs x y",
+                "fc fb",
         };
+        return ArrayUtils.addAll(defaultFeatures, objectArray);
     }
 }

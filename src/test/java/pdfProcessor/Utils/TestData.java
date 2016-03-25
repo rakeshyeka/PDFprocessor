@@ -38,6 +38,10 @@ public class TestData {
         return randomWholeNumber + 1;
     }
 
+    public static Boolean randomBoolean() {
+        return randomNaturalNumber(2) > 1;
+    }
+
     public static float randomFloat() {
         Random randomGenerator = new Random();
         return randomGenerator.nextFloat() * 100;

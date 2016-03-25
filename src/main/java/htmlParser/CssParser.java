@@ -124,7 +124,7 @@ public class CssParser {
                         && !vault.getHindiFontClasses().containsKey(fontFamily)) {
                     vault.getHindiFontClasses().put(fontFamily, convertorClass);
                 }
-                if (fontData.contains(CssParserConstants.BOLD) && !vault.getBoldFontClasses().contains(fontFamily)) {
+                if (Config.isBoldClass(fontData) && !vault.getBoldFontClasses().contains(fontFamily)) {
                     vault.getBoldFontClasses().add(fontFamily);
                 }
             }

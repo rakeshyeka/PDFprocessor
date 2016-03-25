@@ -2,6 +2,7 @@ package pdfProcessor.Utils;
 
 import htmlParser.Text;
 import htmlParser.TextPropertyVault;
+import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -12,6 +13,10 @@ public class TextTestHelper {
     public static String populateRandomFeaturesInTextEntity(Text textEntity) {
         String textData = TestData.randomString();
         textEntity.setData(textData);
+        Boolean isColored = TestData.randomBoolean();
+        textEntity.setColoured(isColored);
+        Boolean isBold = TestData.randomBoolean();
+        textEntity.setBold(isBold);
         Map<String, String> classesMap = new HashMap<String, String>();
         String randomXPosition = getRandomKeyFromMap(TextPropertyVault.getXPositions());
         classesMap.put("x", randomXPosition);
@@ -29,6 +34,10 @@ public class TextTestHelper {
                 "fs", TextPropertyVault.getFontSizes().get(randomFontSize).toString());
         expectedFeatures = expectedFeatures.replace(
                 "l", Integer.toString(textData.length()));
+        expectedFeatures = expectedFeatures.replace(
+                "fc", Integer.toString(BooleanUtils.toInteger(isColored)));
+        expectedFeatures = expectedFeatures.replace(
+                "fb", Integer.toString(BooleanUtils.toInteger(isBold)));
         return expectedFeatures;
     }
 
