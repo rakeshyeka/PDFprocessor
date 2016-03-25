@@ -1,0 +1,5 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/Ambrosia*.sfd
+#Make sure we can generate a font family
+
+helper107.pe("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/Ambrosia.sfd", "/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/AmbrosiaBold.sfd", "/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/AmbrosiaItalic.sfd");

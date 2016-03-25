@@ -1,0 +1,16 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/FormalScript.sfd, fonts/dvng10a-crash.sfd
+# Tests that contextual chaining tables do not cause crashes.
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/FormalScript.sfd");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/FormalScript.otf","ttf",0x80);
+Close();
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/FormalScript.otf");
+Close();
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/dvng10a-crash.sfd");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Deva.otf","ttf",0x80);
+Close();
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Deva.otf");
+Close();
+Quit()

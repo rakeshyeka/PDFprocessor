@@ -1,0 +1,8 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/ecrm1000.pfa fonts/ecrm1000.tfm
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/ecrm1000.pfa")
+MergeKern("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/ecrm1000.tfm")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/ecrm.ttf","",0x200)
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/ecrm.ttf")
+Quit()

@@ -1,0 +1,11 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/Ambrosia.sfd
+#Make sure we can generate truetype instructions
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/Ambrosia.sfd")
+SetPref("DetectDiagonalStems",1)
+SelectAll()
+AutoHint()
+SetFontOrder(2)
+AutoInstr()
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Ambrosia.ttf")

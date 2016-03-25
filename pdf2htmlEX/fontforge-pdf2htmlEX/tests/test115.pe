@@ -1,0 +1,7 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/n019003l.pfb
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/n019003l.pfb");
+SelectAll();
+ReplaceWithReference();
+Quit()
