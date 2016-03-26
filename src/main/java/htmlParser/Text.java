@@ -15,6 +15,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
@@ -33,6 +34,10 @@ public class Text {
 	private String data = "";
 
 	private String fontConvertor;
+
+	public Text(){
+
+	}
 
 	public Text(String data, boolean isHindi, boolean isBold, boolean isColoured, String fontConvertor) {
 		this.data = data;
@@ -70,7 +75,9 @@ public class Text {
 	}
 
 	public String toString() {
-		if (this.rawElement!= null && this.rawElement.tagName().equals("div")) {
+		if (this.rawElement!= null
+				&& this.rawElement.tagName().equals("div")
+				&& this.children != null) {
 			String finalText = "";
 			this.data = "";
 			String oldFontConvertor = null;
@@ -101,6 +108,26 @@ public class Text {
 		}
 		
 		return this.data;
+	}
+
+	public String getTextFeatures() {
+		String features = "";
+		String xPosition = TextPropertyVault.getXPositions().get(getClasses().get("x")).toString();
+		String yPosition = TextPropertyVault.getYPositions().get(getClasses().get("y")).toString();
+		String fontSizes = TextPropertyVault.getFontSizes().get(getClasses().get("fs")).toString();
+		String textLength = Integer.toString(this.data.length());
+		features = TextPropertyVault.getFeatureListFormat();
+		features = features.replace("x", xPosition);
+		features = features.replace("y", yPosition);
+		features = features.replace("fs", fontSizes);
+		features = features.replace("l", textLength);
+		features = features.replace("fc", booleanToIntegerString(this.isColoured()));
+		features = features.replace("fb", booleanToIntegerString(this.isBold()));
+		return features;
+	}
+
+	private String booleanToIntegerString(Boolean bool) {
+		return Integer.toString(BooleanUtils.toInteger(bool));
 	}
 
 	private void processNodeValue() {

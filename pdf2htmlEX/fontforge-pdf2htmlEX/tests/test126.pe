@@ -1,0 +1,8 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/DataURI.sfd
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/DataURI.sfd");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/DataURI.svg");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/DataURI.pt3");
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/DataURI.svg");
+#Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/DataURI.pt3");	/* We can't read this type3 font */

@@ -1,0 +1,9 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/CourierNew.ttf
+#Make sure we can count points properly when the contour starts on an off curve point
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/CourierNew.ttf");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/CourierNew.ttf")
+Close()
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/CourierNew.ttf")
+Quit()

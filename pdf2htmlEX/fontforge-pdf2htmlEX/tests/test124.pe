@@ -1,0 +1,11 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs:
+
+# Check that detach glyph works
+New()
+Select(65)
+SetWidth(400)
+CopyReference()
+Select(66)
+SameGlyphAs()
+DetachGlyphs()

@@ -359,6 +359,7 @@ spherical Coccus (pl.: cocci), the rod-shaped Bacillus (pl.: bacilli), the
 comma-shaped Vibrium (pl.: vibrio) and the spiral Spirillum (pl.: spirilla)
 
 (Figure 2.1).
+{para}
 
 2015-16(19/01/2015)
 
@@ -456,6 +457,7 @@ Many of them have a significant impact on human
 affairs. They are helpful in making curd from milk,
 
 production of antibiotics, fixing nitrogen in legume
+{para}
 
 2015-16(19/01/2015)
 
@@ -634,6 +636,7 @@ Figure 2.4(a) Euglena
 (b)
 
 (a)
+{para}
 
 2015-16(19/01/2015)
 
@@ -723,6 +726,7 @@ plants as mycorrhiza.
 Reproduction in fungi can take place by vegetative means -
 
 fragmentation, fission and budding. Asexual reproduction is by spores
+{para}
 
 2015-16(19/01/2015)
 
@@ -821,6 +825,7 @@ Figure 2.5Fungi: (a) Mucor
 (a)
 
 (b)
+{para}
 
 2015-16(19/01/2015)
 
@@ -902,6 +907,7 @@ are saprophytes or parasites while a large number of them are
 decomposers of litter and help in mineral cycling. Some examples are
 
 Alternaria, Colletotrichum and Trichoderma.
+{para}
 
 2015-16(19/01/2015)
 
@@ -984,6 +990,7 @@ truly 'living', if we understand living as those organisms that have a cell
 structure. The viruses are non-cellular organisms that are characterised
 
 by having an inert crystalline structure outside the living cell. Once they
+{para}
 
 2015-16(19/01/2015)
 
@@ -1143,6 +1150,7 @@ So close is their association that if one saw a lichen in nature one would
 never imagine that they had two different organisms within them. Lichens
 
 are very good pollution indicators - they do not grow in polluted areas.
+{para}
 
 2015-16(19/01/2015)
 
@@ -1191,5 +1199,6 @@ genetic material. Also name four common viral diseases.
 12.Organise a discussion in your class on the topic - Are viruses living or non-
 
 living?
+{para}
 
 2015-16(19/01/2015)

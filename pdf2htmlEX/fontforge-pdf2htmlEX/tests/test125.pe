@@ -1,0 +1,21 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/MinionPro-Regular.fea
+
+# Check that detach glyph works
+New()
+MergeFeature("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/MinionPro-Regular.fea")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Untitled2.otf")
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Untitled2.otf")
+if ( SizeOf(GetLookups("GSUB"))<=0 )
+  Error("No lookups")
+endif
+Close()
+
+New()
+MergeFeature("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/ffMinionPro-Regular.fea")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Untitled2.otf")
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Untitled2.otf")
+if ( SizeOf(GetLookups("GSUB"))<=0 )
+  Error("No lookups")
+endif
+Close()

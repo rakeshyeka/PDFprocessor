@@ -1,6 +1,5 @@
 package htmlParser;
 
-import java.awt.event.TextEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +10,10 @@ public class Page {
 	private boolean isHindi;
 	private List<Text> content = new ArrayList<Text>();
 	private int pageNumber;
+
+	public Page(List<Text> content) {
+		this.content = content;
+	}
 
 	public Page(Element el) {
 		if (el != null && el.childNodeSize() > 0) {
@@ -24,9 +27,12 @@ public class Page {
 
 	public static List<Page> buildPageFromNodeList(Element element) {
 		List<Page> pageList = new ArrayList<Page>();
+		int pageNumber = 1;
 		for (Element child : element.getElementsByClass("pf")) {
 			Page page = new Page(child);
+			page.setPageNumber(pageNumber);
 			pageList.add(page);
+			pageNumber++;
 		}
 		return pageList;
 
@@ -62,8 +68,16 @@ public class Page {
 
 	public String toString() {
 		String text = "";
-		text = processTextEntities(text, this.content);
-		return text;
+		return processTextEntities(text, this.content);
+	}
+
+	public String extractTextFeatures() {
+		String textFeaturesContent = "";
+		for (int i=0; i< this.content.size(); i++){
+			Text textEntity = content.get(i);
+			textFeaturesContent += textEntity.getTextFeatures() + "\n";
+		}
+		return textFeaturesContent;
 	}
 
 	private String processTextEntities(String text, List<Text> content) {
@@ -75,8 +89,8 @@ public class Page {
 					? textEntity.getClasses().get("fs") : "";
 			if (!fontSizeClass.equals("fs0") || !pageHeaderFlag) {
 				pageHeaderFlag = false;
-				if (HtmlFileFilter.getConfig().isParagraphForBold()
-						|| HtmlFileFilter.getConfig().isParagraphForColoured()) {
+				if (HtmlToTextProcessor.getConfig().isParagraphForBold()
+						|| HtmlToTextProcessor.getConfig().isParagraphForColoured()) {
 					Pair<String, Integer> responsePair = addBoundaryToText(textEntity, text,
 							Constants.BLOCK_DECORATION_BOUNDARY, i, prevBold);
 					text = responsePair.getLeft();

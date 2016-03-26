@@ -1,0 +1,8 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/CaslonMM.sfd
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/CaslonMM.sfd");
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Caslon.mm.pfa")
+Close()
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/Caslon.mm.pfa")
+Quit()

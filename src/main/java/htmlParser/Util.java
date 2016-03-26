@@ -1,7 +1,6 @@
 package htmlParser;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -120,5 +119,27 @@ public class Util {
 			}
 			return true;
 		}
+	}
+
+	public static void writeContentToFile(String fileName, String content) {
+		PrintWriter out;
+		createFoldersForFile(fileName);
+		try {
+			out = new PrintWriter(fileName);
+			out.println(content);
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private static void createFoldersForFile(String fileName) {
+		File filepath = new File(fileName);
+		File parentFolderPath = filepath.getParentFile();
+		parentFolderPath.mkdirs();
+	}
+
+	public static String stripSlashes(String text) {
+		return StringUtils.strip(text, FILE_SEPERATOR);
 	}
 }

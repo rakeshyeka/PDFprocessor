@@ -1,0 +1,6 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/cmbsy10.pfb
+#Make sure merge fonts works...
+
+New();
+MergeFonts("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/cmbsy10.pfb")

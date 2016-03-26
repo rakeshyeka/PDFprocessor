@@ -1,0 +1,22 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/HanSans-Bold.otf
+# but any other otf cid font would do.
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/HanSans-Bold.otf");
+Print( "...Read HanSans-Bold.otf")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.otf");
+Print( "...Generated otf (cid)")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.cid");
+Print( "...Generated ps cid")
+Save("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.sfd");
+Print( "...Saved cid sfd")
+Save("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.sfdir");
+Print( "...Saved cid sfdir")
+Close();
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.sfdir");
+Print( "...Opened cid sfdir")
+Close();
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/HansSansBold.sfd");
+Print( "...Opened cid sfd")
+Close();
+Quit()

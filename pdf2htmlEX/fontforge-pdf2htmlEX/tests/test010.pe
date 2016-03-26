@@ -1,0 +1,14 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Print("....I expect this test to generate some error messages");
+#Print(".... But it should not crash, nor terminate with an error status");
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/GillSans.dfont");
+SelectAll();
+Simplify();
+Print("....Simplified");
+ExpandStroke(20);
+Print("....Expanded");
+Scale(200,150);
+Print("....Scaled");
+#RemoveOverlap();
+#Print("....Simple Remove Overlap test");
+Quit()

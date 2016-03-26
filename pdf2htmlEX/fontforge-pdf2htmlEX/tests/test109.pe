@@ -1,0 +1,12 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/OverlapBugs.sfd
+#Needs: fonts/feta20.pfb
+#Make sure remove overlap sort of works...
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/OverlapBugs.sfd")
+SelectAll();
+RemoveOverlap();
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/feta20.pfb");
+SelectAll();
+RemoveOverlap();

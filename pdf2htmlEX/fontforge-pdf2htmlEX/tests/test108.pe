@@ -1,0 +1,7 @@
+#!/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/fontforgeexe/fontforge
+#Needs: fonts/ItalicHand.sfd
+#Make sure we can generate GPOS, GSUB and morx tables without crashing.
+
+Open("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/fonts/ItalicHand.sfd")
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/ItalicHand.ttf","",0);
+Generate("/home/rakesh/pdf2htmlEX/fontforge-pdf2htmlEX/tests/results/ItalicHand.ttf","",16);

@@ -2,6 +2,7 @@ package htmlParser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -57,5 +58,9 @@ public class DomParser {
 			text = String.format(Constants.NEWLINE_JOIN_TEMPLATE, text, "");
 		}
 		return text;
+	}
+
+	public Iterator<Page> getPagesIterator() {
+		return this.pages.iterator();
 	}
 }
