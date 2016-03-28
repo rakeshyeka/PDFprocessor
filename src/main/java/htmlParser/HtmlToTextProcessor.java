@@ -12,8 +12,8 @@ public class HtmlToTextProcessor extends FolderWalker {
 	@Override
 	public void updateConfig() {
 		Config config = new Config(false);
-		config.setInputFolder("/home/rakesh/PDFprocessor/src/integration-test/resources/input");
-		config.setOutputFolder("/home/rakesh/PDFprocessor/src/integration-test/resources/output");
+		config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
+		config.setOutputFolder("/home/rakesh/Copy/NCERT/03_Text/Current/Psychology");
 		config.setParagraphForBold(true);
 		config.setParagraphForColoured(true);
 		setConfig(config);

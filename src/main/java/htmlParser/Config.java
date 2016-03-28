@@ -65,16 +65,20 @@ public class Config {
 
     private static Boolean isGreyishColour(String fontData) {
         String[] rgb = fontData.split(", ");
-        float r = Float.parseFloat(rgb[0]);
-        float g = Float.parseFloat(rgb[1]);
-        float b = Float.parseFloat(rgb[2]);
+        if (rgb.length == 3) {
+            float r = Float.parseFloat(rgb[0]);
+            float g = Float.parseFloat(rgb[1]);
+            float b = Float.parseFloat(rgb[2]);
 
-        float mean = (r + g + b)/3;
-        float meanDiff = (
-                Math.abs(mean - r)
-                + Math.abs(mean - g)
-                + Math.abs(mean - b))/3;
-        return mean < 100 && meanDiff < 10;
+            float mean = (r + g + b) / 3;
+            float meanDiff = (
+                    Math.abs(mean - r)
+                            + Math.abs(mean - g)
+                            + Math.abs(mean - b)) / 3;
+            return mean < 100 && meanDiff < 10;
+        } else {
+            return true;
+        }
     }
 
     public static Boolean isBoldClass(String fontData) {
