@@ -1,9 +1,7 @@
 package htmlParser;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 public class HtmlToTextProcessor extends FolderWalker {
 	private static final String HINDI = "Hindi";
@@ -41,16 +39,22 @@ public class HtmlToTextProcessor extends FolderWalker {
 	private static void parseInputFileIntoEnglishHindiOutputText(String inputFile, String engFile, String hinFile) {
 		DomParser dom = new DomParser(inputFile);
 		String englishPages = dom.getEnglishPages();
-		Util.writeContentToFile(engFile, englishPages);
+		ContentFileWriter englishFileWriter = new ContentFileWriter(engFile, false);
+		englishFileWriter.write(englishPages);
+		englishFileWriter.close();
 
 		String hindiPages = dom.getHindiPages();
-		Util.writeContentToFile(hinFile, hindiPages);
+		ContentFileWriter hindiFileWriter = new ContentFileWriter(hinFile, false);
+		hindiFileWriter.write(hindiPages);
+		hindiFileWriter.close();
 	}
 
 	private static void parseInputFileIntoOutputText(String inputFile, String outputFile) {
 		DomParser dom = new DomParser(inputFile);
 		String pages = dom.getPages();
-		Util.writeContentToFile(outputFile, pages);
+		ContentFileWriter fileWriter = new ContentFileWriter(outputFile, false);
+		fileWriter.write(pages);
+		fileWriter.close();
 	}
 
 	private static String getEnglishOutputFilePath(
@@ -59,7 +63,6 @@ public class HtmlToTextProcessor extends FolderWalker {
 			File inputDirectory,
 			File outputDirectory) {
 		return getOutputFilePath(currentDirectoryPath, fileName, inputDirectory, outputDirectory, ENGLISH);
-
 	}
 
 	private static String getHindiOutputFilePath(

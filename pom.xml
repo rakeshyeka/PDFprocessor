@@ -50,6 +50,11 @@
             <artifactId>JUnitParams</artifactId>
             <version>1.0.4</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.mahout</groupId>
+            <artifactId>mahout-core</artifactId>
+            <version>0.9</version>
+        </dependency>
     </dependencies>
     <profiles>
         <!-- The Configuration of the development profile -->

@@ -1,9 +1,12 @@
 package htmlParser;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.apache.commons.math.util.DoubleArray;
+import org.apache.mahout.math.DenseVector;
 import org.jsoup.nodes.Element;
 
 public class Page {
@@ -79,6 +82,11 @@ public class Page {
 		}
 		return textFeaturesContent;
 	}
+
+	public Iterator<Text> getTextIterator() {
+		return content.iterator();
+	}
+
 
 	private String processTextEntities(String text, List<Text> content) {
 		int prevBold = -2;

@@ -121,25 +121,11 @@ public class Util {
 		}
 	}
 
-	public static void writeContentToFile(String fileName, String content) {
-		PrintWriter out;
-		createFoldersForFile(fileName);
-		try {
-			out = new PrintWriter(fileName);
-			out.println(content);
-			out.close();
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private static void createFoldersForFile(String fileName) {
-		File filepath = new File(fileName);
-		File parentFolderPath = filepath.getParentFile();
-		parentFolderPath.mkdirs();
-	}
-
 	public static String stripSlashes(String text) {
 		return StringUtils.strip(text, FILE_SEPERATOR);
+	}
+
+	public static String newLineJoin(String text1, String text2) {
+		return String.format(Constants.NEWLINE_JOIN_TEMPLATE, text1, text2);
 	}
 }

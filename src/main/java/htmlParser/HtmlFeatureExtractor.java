@@ -1,12 +1,20 @@
 package htmlParser;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.FileSystem;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.SequenceFile;
+import org.apache.mahout.math.DenseVector;
+import org.apache.mahout.math.VectorWritable;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
 
 public class HtmlFeatureExtractor extends FolderWalker {
 
-    public static final String OUTPUT_FILE_EXTENSION = ".csv";
+    public static final String OUTPUT_FILE_EXTENSION = ".seq";
 
     @Override
     public void updateConfig() {
@@ -39,13 +47,47 @@ public class HtmlFeatureExtractor extends FolderWalker {
         Iterator<Page> pageIterator = domParser.getPagesIterator();
         while (pageIterator.hasNext()) {
             Page page = pageIterator.next();
-            String pageTextFeatures = page.extractTextFeatures();
             int pageNumber = page.getPageNumber();
             fileName = fileName.replace(".html", "");
             String outputFile = Util.pathJoin(outputPath, fileName);
             outputFile = Util.pathJoin(outputFile, Integer.toString(pageNumber));
             outputFile = outputFile + OUTPUT_FILE_EXTENSION;
-            Util.writeContentToFile(outputFile, pageTextFeatures);
+            //ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
+            //contentFileAppender.write(TextPropertyVault.getFeatureListFormat());
+            FileSystem fs = null;
+            SequenceFile.Writer writer = null;
+            Path path = new Path(outputFile);
+            Configuration conf = new Configuration();
+            try {
+                fs = FileSystem.get(conf);
+                writer = new SequenceFile.Writer(fs, conf, path, LongWritable.class, VectorWritable.class);
+            } catch(Exception e){
+                e.printStackTrace();
+            }
+            Iterator<Text> textIterator = page.getTextIterator();
+            while (textIterator.hasNext()) {
+                Text text = textIterator.next();
+                String textFeatures = text.getTextFeatures();
+                writeVectorsToFileForMahout(textFeatures, writer);
+                //contentFileAppender.write(textFeatures);
+            }
+            //contentFileAppender.close();
+        }
+    }
+
+    private static void writeVectorsToFileForMahout(String textFeatures, SequenceFile.Writer writer){
+        String[] stringFeatures = textFeatures.split(", ");
+        double[] doubleFeatures = new double[stringFeatures.length];
+        for (int i=0; i < stringFeatures.length; i++) {
+            doubleFeatures[i] = Double.valueOf(stringFeatures[i]);
+        }
+        DenseVector vector = new DenseVector(doubleFeatures);
+        try {
+            VectorWritable vec = new VectorWritable();
+            vec.set(vector);
+            writer.append(new LongWritable(), vec);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
