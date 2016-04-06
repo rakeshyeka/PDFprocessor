@@ -23,6 +23,7 @@ public class CssParser {
     }
 
     public static void parseCssText(Document dom) {
+        TextPropertyVault.clearVault(false);
         vault = TextPropertyVault.getVault();
         for (Element style : dom.getElementsByTag(Constants.STYLE_TAG)) {
             extractCssFromStyleTag(style);

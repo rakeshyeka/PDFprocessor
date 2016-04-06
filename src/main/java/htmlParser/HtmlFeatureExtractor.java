@@ -14,14 +14,14 @@ import java.util.Iterator;
 
 public class HtmlFeatureExtractor extends FolderWalker {
 
-    public static final String OUTPUT_FILE_EXTENSION = ".seq";
+    public static final String OUTPUT_FILE_EXTENSION = ".txt";
 
     @Override
     public void updateConfig() {
         Config config = new Config(false);
         config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
-        config.setOutputFolder("/home/rakesh/Copy/NCERT/03_5_Features/Current/Psychology");
-        TextPropertyVault.setFeatureListFormat("x, y, fs, l, fc, fb");
+        config.setOutputFolder("/home/rakesh/Copy/NCERT/03_5_Features/Tabbed/Psychology");
+        TextPropertyVault.setFeatureListFormat("x\ty\tfs\tl\tfc\tfb");
         this.setConfig(config);
     }
 
@@ -52,7 +52,7 @@ public class HtmlFeatureExtractor extends FolderWalker {
             String outputFile = Util.pathJoin(outputPath, fileName);
             outputFile = Util.pathJoin(outputFile, Integer.toString(pageNumber));
             outputFile = outputFile + OUTPUT_FILE_EXTENSION;
-            //ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
+            ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
             //contentFileAppender.write(TextPropertyVault.getFeatureListFormat());
             FileSystem fs = null;
             SequenceFile.Writer writer = null;
@@ -68,10 +68,10 @@ public class HtmlFeatureExtractor extends FolderWalker {
             while (textIterator.hasNext()) {
                 Text text = textIterator.next();
                 String textFeatures = text.getTextFeatures();
-                writeVectorsToFileForMahout(textFeatures, writer);
-                //contentFileAppender.write(textFeatures);
+                //writeVectorsToFileForMahout(textFeatures, writer);
+                contentFileAppender.write(textFeatures);
             }
-            //contentFileAppender.close();
+            contentFileAppender.close();
         }
     }
 

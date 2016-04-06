@@ -31,7 +31,7 @@ public class CssParserTest extends BaseTest {
 	public void setup() throws IOException {
 		elements = new Elements();
 		elements.add(style);
-		TextPropertyVault.clearVault();
+		TextPropertyVault.clearVault(false);
 		when(dom.getElementsByTag(Constants.STYLE_TAG)).thenReturn(elements);
 	}
 	

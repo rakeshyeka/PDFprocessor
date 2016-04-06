@@ -16,7 +16,6 @@ public class ITCssParserTest extends BaseTest{
     public void setup() {
         Config config = new Config(false);
         HtmlToTextProcessor.setConfig(config);
-        TextPropertyVault.setFeatureListFormat("x y fs");
         inputFile = fetchResourceFileUsingClassLoader("input/test.html");
     }
 

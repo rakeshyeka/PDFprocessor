@@ -29,7 +29,7 @@ public class BaseTest {
     }
 
     public static void initializeTextPropertyVault () {
-        TextPropertyVault.clearVault();
+        TextPropertyVault.clearVault(true);
         TextPropertyVault.setXPositions(TextTestHelper.getRandomMap());
         TextPropertyVault.setYPositions(TextTestHelper.getRandomMap());
         TextPropertyVault.setFontSizes(TextTestHelper.getRandomMap());

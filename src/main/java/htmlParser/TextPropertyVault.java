@@ -17,17 +17,19 @@ public class TextPropertyVault {
 	private static String featureListFormat;
 
 	private TextPropertyVault() {
-		clearVault();
+		clearVault(true);
 	}
 
-	public static void clearVault() {
+	public static void clearVault(Boolean clearFeatureFormat) {
 		TextPropertyVault.setHindiFontClasses(new HashMap<String, String>());
 		TextPropertyVault.setBoldFontClasses(new ArrayList<String>());
 		TextPropertyVault.setColouredClasses(new HashMap<String, Boolean>());
 		TextPropertyVault.setXPositions(new HashMap<String, Float>());
 		TextPropertyVault.setYPositions(new HashMap<String, Float>());
 		TextPropertyVault.setFontSizes(new HashMap<String, Float>());
-		TextPropertyVault.featureListFormat = null;
+		if (clearFeatureFormat) {
+			TextPropertyVault.featureListFormat = null;
+		}
 	}
 
 	public static TextPropertyVault getVault() {
