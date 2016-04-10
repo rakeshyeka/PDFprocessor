@@ -53,26 +53,34 @@ public class HtmlFeatureExtractor extends FolderWalker {
             outputFile = Util.pathJoin(outputFile, Integer.toString(pageNumber));
             outputFile = outputFile + OUTPUT_FILE_EXTENSION;
             ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
-            //contentFileAppender.write(TextPropertyVault.getFeatureListFormat());
-            FileSystem fs = null;
-            SequenceFile.Writer writer = null;
-            Path path = new Path(outputFile);
-            Configuration conf = new Configuration();
-            try {
-                fs = FileSystem.get(conf);
-                writer = new SequenceFile.Writer(fs, conf, path, LongWritable.class, VectorWritable.class);
-            } catch(Exception e){
-                e.printStackTrace();
-            }
+            contentFileAppender.write("ID\t"+TextPropertyVault.getFeatureListFormat());
+            SequenceFile.Writer writer = getVectorFileWriter(outputFile);
             Iterator<Text> textIterator = page.getTextIterator();
+            int counter = 0;
             while (textIterator.hasNext()) {
                 Text text = textIterator.next();
                 String textFeatures = text.getTextFeatures();
                 //writeVectorsToFileForMahout(textFeatures, writer);
-                contentFileAppender.write(textFeatures);
+                contentFileAppender.write(Integer.toString(counter)+"\t"+textFeatures);
+                counter+=1;
             }
             contentFileAppender.close();
+            ClusterRunner.extractClusters(outputFile);
         }
+    }
+
+    private static SequenceFile.Writer getVectorFileWriter(String outputFile) {
+        FileSystem fs = null;
+        SequenceFile.Writer writer = null;
+        Path path = new Path(outputFile);
+        Configuration conf = new Configuration();
+        try {
+            fs = FileSystem.get(conf);
+            writer = new SequenceFile.Writer(fs, conf, path, LongWritable.class, VectorWritable.class);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        return writer;
     }
 
     private static void writeVectorsToFileForMahout(String textFeatures, SequenceFile.Writer writer){

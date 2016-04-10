@@ -1,6 +1,8 @@
 package htmlParser;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -127,5 +129,21 @@ public class Util {
 
 	public static String newLineJoin(String text1, String text2) {
 		return String.format(Constants.NEWLINE_JOIN_TEMPLATE, text1, text2);
+	}
+
+	public static List<String> readContentFromFilePath(String filePath) throws IOException {
+		BufferedReader br = new BufferedReader(new FileReader(filePath));
+		List<String> lines = new ArrayList<String>();
+		try {
+			String line = br.readLine();
+
+			while (line != null) {
+				lines.add(line);
+				line = br.readLine();
+			}
+			return lines;
+		} finally {
+			br.close();
+		}
 	}
 }
