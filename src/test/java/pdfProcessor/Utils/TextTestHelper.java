@@ -59,4 +59,47 @@ public class TextTestHelper {
         }
         return (String) key;
     }
+
+    public static Text createTextRandomEntity() {
+        String randomFeatureList = generateRandomTextFeatures();
+        return createTextRandomEntity(randomFeatureList.split(TextPropertyVault.getDelimiter()));
+    }
+
+    public static String generateRandomTextFeatures() {
+        String featureListFormat = TextPropertyVault.getFeatureListFormat();
+        featureListFormat = featureListFormat.replace("x", Float.toString(TestData.randomFloat()));
+        featureListFormat = featureListFormat.replace("y", Float.toString(TestData.randomFloat()));
+        featureListFormat = featureListFormat.replace("fs", Float.toString(TestData.randomFloat()));
+        featureListFormat = featureListFormat.replace("l",
+                Integer.toString(TestData.randomNaturalNumber()));
+        featureListFormat = featureListFormat.replace("fc", Integer.toString(
+                BooleanUtils.toInteger(TestData.randomBoolean())));
+        featureListFormat = featureListFormat.replace("fb", Integer.toString(
+                BooleanUtils.toInteger(TestData.randomBoolean())));
+        return featureListFormat;
+    }
+
+    public static Text createTextRandomEntity(String[] features) {
+
+        String xPosClass = TestData.randomString();
+        float xPos = Float.parseFloat(features[0]);
+        TextPropertyVault.getXPositions().put(xPosClass, xPos);
+
+        String yPosClass = TestData.randomString();
+        float yPos = Float.parseFloat(features[1]);
+        TextPropertyVault.getYPositions().put(yPosClass, yPos);
+
+        String fontSizeClass = TestData.randomString();
+        float fontSize = Float.parseFloat(features[2]);
+        TextPropertyVault.getFontSizes().put(fontSizeClass, fontSize);
+
+        Text textEntity = new Text();
+        textEntity.getClasses().put("x",xPosClass);
+        textEntity.getClasses().put("y",yPosClass);
+        textEntity.getClasses().put("fs",fontSizeClass);
+        textEntity.setData(TestData.randomString(Integer.parseInt(features[3])));
+        textEntity.setColoured(BooleanUtils.toBoolean(Integer.parseInt(features[4])));
+        textEntity.setBold(BooleanUtils.toBoolean(Integer.parseInt(features[5])));
+        return textEntity;
+    }
 }

@@ -9,6 +9,8 @@ public class HtmlToTextProcessor extends FolderWalker {
 
 	@Override
 	public void updateConfig() {
+		TextPropertyVault.setFeatureListFormat("x\ty");
+		TextPropertyVault.setDelimiter("\t");
 		Config config = new Config(false);
 		config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
 		config.setOutputFolder("/home/rakesh/Copy/NCERT/03_Text/Current/Psychology");

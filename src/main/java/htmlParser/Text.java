@@ -20,7 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 
-public class Text {
+public class Text implements Comparable<Text>{
 	private static final String CONVERSION_ERROR = "Error while converting text : %s";
 	private boolean isBold;
 	private boolean isHindi;
@@ -126,6 +126,123 @@ public class Text {
 		return features;
 	}
 
+	public boolean hasChildren() {
+		return this.children != null;
+	}
+
+	public boolean isBold() {
+		return isBold;
+	}
+
+	public void setBold(boolean isBold) {
+		this.isBold = isBold;
+	}
+
+	public List<Text> getChildren() {
+		return this.children;
+	}
+
+	public void addToData(String data) {
+		if (!Util.isNullOrEmptyOrWhiteSpace(data)) {
+			this.data = String.format("%s%s", this.data, data);
+		}
+	}
+
+	public void setData(String data) {
+		if (!Util.isNullOrEmptyOrWhiteSpace(data)) {
+			this.data = data;
+		}
+	}
+
+	public boolean isHindi() {
+		return isHindi;
+	}
+
+	public Map<String, String> getClasses() {
+		return classes;
+	}
+
+	public void setClasses(Map<String, String> classes) {
+		this.classes = classes;
+	}
+
+	@Override
+	public int compareTo(Text text) {
+		String[] currentFeatures = this.getTextFeatures().split(TextPropertyVault.getDelimiter());
+		String[] textFeatures = text.getTextFeatures().split(TextPropertyVault.getDelimiter());
+		double currentX = Float.parseFloat(currentFeatures[0]);
+		double currentY = Float.parseFloat(currentFeatures[1]);
+		double textX = Float.parseFloat(textFeatures[0]);
+		double textY = Float.parseFloat(textFeatures[1]);
+		int xDifference = getComparableIntegersForDoubleValues(textX - currentX);
+		int yDifference = getComparableIntegersForDoubleValues(textY - currentY);
+		return yDifference == 0 ? xDifference : yDifference;
+	}
+
+	private int getComparableIntegersForDoubleValues(double difference) {
+		boolean isNegative = difference < 0;
+		double absDifference = Math.abs(difference);
+		int result = 0;
+		if (absDifference > 1){
+			result = isNegative ? -1 : 1;
+		}
+		return result;
+	}
+
+	private String decorateBoldText(String text) {
+		return String.format(Constants.BOLD_TEMPLATE, text);
+	}
+
+	private String normalizeData() {
+		data = data.replace('—', '-');
+		data = data.replace('–', '-');
+		data = data.replace('“', '"');
+		data = data.replace('”', '"');
+		// data = data.replace('é', 'e');
+		data = data.replace("‘", "'");
+		data = data.replace("’", "'");
+		data = data.replace("…", "...");
+		data = data.replace("∗", "");
+
+		if (this.isHindi) {
+			data = data.replace("&lt;", "<");
+			data = data.replace("&amp;", "&");
+		} else {
+			// data = data.replace("[", "");
+			// data = data.replace("]", "");
+		}
+		return data;
+	}
+
+	public boolean isFooterBoundary() {
+		return isFooterBoundary;
+	}
+
+	public void setFooterBoundary() {
+		this.isFooterBoundary = data.equals(Constants.FOOTER_BOUNDARY);
+	}
+
+	public boolean containsBold() {
+		return containsBold;
+	}
+
+	public void setContainsBold(boolean containsBold) {
+		this.containsBold = containsBold;
+	}
+
+	public String getFontConvertor() {
+		return this.fontConvertor;
+	}
+
+	public boolean isColoured() {
+		return isColoured;
+	}
+
+	public void setColoured(boolean isColoured) {
+		this.isColoured = isColoured;
+	}
+
+
 	private String booleanToIntegerString(Boolean bool) {
 		return Integer.toString(BooleanUtils.toInteger(bool));
 	}
@@ -151,27 +268,27 @@ public class Text {
 		}
 		return text;
 	}
-	
+
 	private String convertToUnicodeJS(String text) {
 		String outputString = null;
 		try {
 			ScriptEngineManager manager = new ScriptEngineManager();
 			ScriptEngine jsEngine = manager.getEngineByExtension("js");
 			// Get script from JS File
-            FileInputStream fileInputStream = new FileInputStream("F:developmentjavascripttest.js");
-            if (fileInputStream != null) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
-         
-                jsEngine.eval(reader);
-                Invocable invocableEngine = (Invocable)jsEngine;
-                 
+			FileInputStream fileInputStream = new FileInputStream("F:developmentjavascripttest.js");
+			if (fileInputStream != null) {
+				BufferedReader reader = new BufferedReader(new InputStreamReader(fileInputStream));
+
+				jsEngine.eval(reader);
+				Invocable invocableEngine = (Invocable)jsEngine;
+
 				Object object = invocableEngine.invokeFunction(
 						"convert_to_unicode", new Object[] { text });
 				outputString = (String) object;
 				System.out.println("Result: " + object);
-            }
+			}
 		} catch (Exception e) {
-			
+
 		}
 		return outputString;
 	}
@@ -245,98 +362,5 @@ public class Text {
 				}
 			}
 		}
-	}
-
-	public boolean hasChildren() {
-		return this.children != null;
-	}
-
-	public boolean isBold() {
-		return isBold;
-	}
-
-	public void setBold(boolean isBold) {
-		this.isBold = isBold;
-	}
-
-	public List<Text> getChildren() {
-		return this.children;
-	}
-
-	public void addToData(String data) {
-		if (!Util.isNullOrEmptyOrWhiteSpace(data)) {
-			this.data = String.format("%s%s", this.data, data);
-		}
-	}
-
-	public void setData(String data) {
-		if (!Util.isNullOrEmptyOrWhiteSpace(data)) {
-			this.data = data;
-		}
-	}
-
-	public boolean isHindi() {
-		return isHindi;
-	}
-
-	public Map<String, String> getClasses() {
-		return classes;
-	}
-
-	public void setClasses(Map<String, String> classes) {
-		this.classes = classes;
-	}
-
-	private String decorateBoldText(String text) {
-		return String.format(Constants.BOLD_TEMPLATE, text);
-	}
-
-	private String normalizeData() {
-		data = data.replace('—', '-');
-		data = data.replace('–', '-');
-		data = data.replace('“', '"');
-		data = data.replace('”', '"');
-		// data = data.replace('é', 'e');
-		data = data.replace("‘", "'");
-		data = data.replace("’", "'");
-		data = data.replace("…", "...");
-		data = data.replace("∗", "");
-
-		if (this.isHindi) {
-			data = data.replace("&lt;", "<");
-			data = data.replace("&amp;", "&");
-		} else {
-			// data = data.replace("[", "");
-			// data = data.replace("]", "");
-		}
-		return data;
-	}
-
-	public boolean isFooterBoundary() {
-		return isFooterBoundary;
-	}
-
-	public void setFooterBoundary() {
-		this.isFooterBoundary = data.equals(Constants.FOOTER_BOUNDARY);
-	}
-
-	public boolean containsBold() {
-		return containsBold;
-	}
-
-	public void setContainsBold(boolean containsBold) {
-		this.containsBold = containsBold;
-	}
-
-	public String getFontConvertor() {
-		return this.fontConvertor;
-	}
-
-	public boolean isColoured() {
-		return isColoured;
-	}
-
-	public void setColoured(boolean isColoured) {
-		this.isColoured = isColoured;
 	}
 }

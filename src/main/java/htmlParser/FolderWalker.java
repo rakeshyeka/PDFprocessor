@@ -91,17 +91,6 @@ public abstract class FolderWalker {
 		}
 	}
 
-	private static void extractTextFeatures(String inputFile, String outputPath) {
-		DomParser domParser = new DomParser(inputFile);
-		while (domParser.getPagesIterator().hasNext()) {
-			Page page = domParser.getPagesIterator().next();
-			String pageTextFeatures = page.extractTextFeatures();
-			int pageNumber = page.getPageNumber();
-			String outputFile = Util.pathJoin(outputPath, Integer.toString(pageNumber));
-			writeContentToFile(outputFile, pageTextFeatures);
-		}
-	}
-
 	private void recurseDirectory(File currentDirectory, File inputDirectory, File outputDirectory) {
 		String currentDirectoryPath = currentDirectory.getAbsolutePath();
 		List<String> childrenInCurrentDirectory = Arrays.asList(currentDirectory.list());

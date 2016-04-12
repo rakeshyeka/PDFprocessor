@@ -123,6 +123,8 @@
                     <excludes>
                         <exclude>**/IT*.java</exclude>
                     </excludes>
+                    <reuseForks>false</reuseForks>
+                    <forkCount>1</forkCount>
                 </configuration>
             </plugin>
             <plugin>

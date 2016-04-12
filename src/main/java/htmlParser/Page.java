@@ -1,9 +1,8 @@
 package htmlParser;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.math.util.DoubleArray;
 import org.apache.mahout.math.DenseVector;
@@ -71,6 +70,7 @@ public class Page {
 
 	public String toString() {
 		String text = "";
+		sortTextContent();
 		return processTextEntities(text, this.content);
 	}
 
@@ -108,6 +108,31 @@ public class Page {
 			}
 		}
 		return text;
+	}
+
+	private void sortTextContent() {
+		Collections.sort(this.content);
+		removeDuplicates();
+	}
+
+	private void removeDuplicates() {
+		Iterator<Text> textIterator = this.content.iterator();
+
+		List<Text> toRemoveList = new ArrayList<Text>();
+		for (int index = 0, nextIndex = index + 1;
+			 index < this.content.size() && nextIndex < this.content.size();){
+			Text currentText = this.content.get(index);
+			Text nextText = this.content.get(nextIndex);
+			if (currentText.compareTo(nextText) == 0) {
+				toRemoveList.add(nextText);
+				nextIndex++;
+			} else {
+				index++;
+				nextIndex = index+1;
+			}
+		}
+
+		content.removeAll(toRemoveList);
 	}
 
 	private Pair<String, Integer> addBoundaryToText(Text textEntity, String text, String boundary, int index, int prevBold) {

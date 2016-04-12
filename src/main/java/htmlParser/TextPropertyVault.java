@@ -14,7 +14,9 @@ public class TextPropertyVault {
 	private static Map<String, Float> yPositions;
 	private static Map<String, Float> fontSizes;
 	private static final String DEFAULT_FEATURE_LIST_FORMAT = "x y fs l fc fb";
+	private static final String DEFAULT_DELIMITER = " ";
 	private static String featureListFormat;
+	private static String delimiter;
 
 	private TextPropertyVault() {
 		clearVault(true);
@@ -65,7 +67,10 @@ public class TextPropertyVault {
 	}
 
 	public static String getFeatureListFormat() {
-		return featureListFormat == null ? DEFAULT_FEATURE_LIST_FORMAT : featureListFormat;
+		String outputFeatureListFormat =
+				featureListFormat == null ? DEFAULT_FEATURE_LIST_FORMAT : featureListFormat;
+
+		return correctDelimiter(outputFeatureListFormat);
 	}
 
 	public static String getDefaultFeatureListFormat() {
@@ -74,6 +79,14 @@ public class TextPropertyVault {
 
 	public static void setFeatureListFormat(String featureListFormat) {
 		TextPropertyVault.featureListFormat = featureListFormat;
+	}
+
+	public static String getDelimiter() {
+		return delimiter == null ? DEFAULT_DELIMITER : delimiter;
+	}
+
+	public static void setDelimiter(String delimiter) {
+		TextPropertyVault.delimiter = delimiter;
 	}
 
 	public Map<String, String> getHindiFontClasses() {
@@ -100,4 +113,7 @@ public class TextPropertyVault {
 		TextPropertyVault.colouredClasses = colouredClasses;
 	}
 
+	private static String correctDelimiter(String outputFeatureListFormat) {
+		return outputFeatureListFormat.replace(DEFAULT_DELIMITER, getDelimiter());
+	}
 }

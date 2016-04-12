@@ -54,6 +54,18 @@ public class TestData {
         return randomUUID();
     }
 
+    public static String randomString(int length) {
+        StringBuilder stringBuilder = new StringBuilder();
+        int loopCounter = length / 36;
+        int remainderLength = length % 36;
+        for (int index = 0; index < loopCounter; index++) {
+            stringBuilder.append(randomUUID());
+        }
+
+        stringBuilder.append(randomUUID().substring(0, remainderLength));
+        return stringBuilder.toString();
+    }
+
     public static int convertToHexValue(int n) {
         return Integer.valueOf(String.valueOf(n), 16);
     }
