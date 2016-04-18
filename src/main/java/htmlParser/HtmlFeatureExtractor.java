@@ -1,5 +1,6 @@
 package htmlParser;
 
+import clusterAnalysis.ClusterRunner;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -42,30 +43,35 @@ public class HtmlFeatureExtractor extends FolderWalker {
         htmlFeatureExtractor.execute();
     }
 
+    public static void parsePageAndExtractTextFeatures(String fileName, String outputPath, Page page) {
+        int pageNumber = page.getPageNumber();
+        fileName = fileName.replace(".html", "");
+        String outputFilePath = Util.pathJoin(outputPath, fileName);
+        String outputFile = Util.pathJoin(outputFilePath, Integer.toString(pageNumber));
+        outputFile = outputFile + OUTPUT_FILE_EXTENSION;
+        ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
+        contentFileAppender.write("ID\t"+ TextPropertyVault.getFeatureListFormat());
+        SequenceFile.Writer writer = getVectorFileWriter(outputFile);
+        Iterator<Text> textIterator = page.getTextIterator();
+        int counter = 0;
+        while (textIterator.hasNext()) {
+            Text text = textIterator.next();
+            String textFeatures = text.getTextFeatures();
+            //writeVectorsToFileForMahout(textFeatures, writer);
+            contentFileAppender.write(Integer.toString(counter)+"\t"+textFeatures);
+            counter+=1;
+        }
+        contentFileAppender.close();
+        ClusterRunner.extractClusters(outputFile, outputFilePath);
+    }
+
+
     private static void parseFileAndExtractTextFeatures(String fileName, String inputFile, String outputPath) {
         DomParser domParser = new DomParser(inputFile);
         Iterator<Page> pageIterator = domParser.getPagesIterator();
         while (pageIterator.hasNext()) {
             Page page = pageIterator.next();
-            int pageNumber = page.getPageNumber();
-            fileName = fileName.replace(".html", "");
-            String outputFile = Util.pathJoin(outputPath, fileName);
-            outputFile = Util.pathJoin(outputFile, Integer.toString(pageNumber));
-            outputFile = outputFile + OUTPUT_FILE_EXTENSION;
-            ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
-            contentFileAppender.write("ID\t"+TextPropertyVault.getFeatureListFormat());
-            SequenceFile.Writer writer = getVectorFileWriter(outputFile);
-            Iterator<Text> textIterator = page.getTextIterator();
-            int counter = 0;
-            while (textIterator.hasNext()) {
-                Text text = textIterator.next();
-                String textFeatures = text.getTextFeatures();
-                //writeVectorsToFileForMahout(textFeatures, writer);
-                contentFileAppender.write(Integer.toString(counter)+"\t"+textFeatures);
-                counter+=1;
-            }
-            contentFileAppender.close();
-            ClusterRunner.extractClusters(outputFile);
+            parsePageAndExtractTextFeatures(fileName, outputPath, page);
         }
     }
 

@@ -2,6 +2,7 @@ package htmlParser;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 public class HtmlToTextProcessor extends FolderWalker {
 	private static final String HINDI = "Hindi";
@@ -53,6 +54,11 @@ public class HtmlToTextProcessor extends FolderWalker {
 
 	private static void parseInputFileIntoOutputText(String inputFile, String outputFile) {
 		DomParser dom = new DomParser(inputFile);
+		Iterator<Page> pagesIterator = dom.getPagesIterator();
+		while (pagesIterator.hasNext()) {
+			Page currentPage = pagesIterator.next();
+			HtmlFeatureExtractor.parsePageAndExtractTextFeatures(inputFile, outputFile, currentPage);
+		}
 		String pages = dom.getPages();
 		ContentFileWriter fileWriter = new ContentFileWriter(outputFile, false);
 		fileWriter.write(pages);

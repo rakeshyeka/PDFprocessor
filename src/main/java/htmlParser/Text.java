@@ -15,6 +15,7 @@ import javax.script.Invocable;
 import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
@@ -28,15 +29,20 @@ public class Text implements Comparable<Text>{
 	private boolean isFooterBoundary;
 	private boolean containsBold;
 	private List<Text> children = null;
-	private Map<String, String> classes = new HashMap<String, String>();
+	private Map<String, String> classes = null;
 	private Element rawElement = null;
+	private String[] featureList;
 
 	private String data = "";
 
 	private String fontConvertor;
 
 	public Text(){
+		classes = new HashMap<String, String>();
+	}
 
+	public Text(String[] featureList) {
+		this.featureList = featureList;
 	}
 
 	public Text(String data, boolean isHindi, boolean isBold, boolean isColoured, String fontConvertor) {
@@ -111,19 +117,23 @@ public class Text implements Comparable<Text>{
 	}
 
 	public String getTextFeatures() {
-		String features = "";
-		String xPosition = TextPropertyVault.getXPositions().get(getClasses().get("x")).toString();
-		String yPosition = TextPropertyVault.getYPositions().get(getClasses().get("y")).toString();
-		String fontSizes = TextPropertyVault.getFontSizes().get(getClasses().get("fs")).toString();
-		String textLength = Integer.toString(this.data.length());
-		features = TextPropertyVault.getFeatureListFormat();
-		features = features.replace("x", xPosition);
-		features = features.replace("y", yPosition);
-		features = features.replace("fs", fontSizes);
-		features = features.replace("l", textLength);
-		features = features.replace("fc", booleanToIntegerString(this.isColoured()));
-		features = features.replace("fb", booleanToIntegerString(this.isBold()));
-		return features;
+		if (this.featureList == null) {
+			String features = "";
+			String xPosition = TextPropertyVault.getXPositions().get(getClasses().get("x")).toString();
+			String yPosition = TextPropertyVault.getYPositions().get(getClasses().get("y")).toString();
+			String fontSizes = TextPropertyVault.getFontSizes().get(getClasses().get("fs")).toString();
+			String textLength = Integer.toString(this.data.length());
+			features = TextPropertyVault.getFeatureListFormat();
+			features = features.replace("x", xPosition);
+			features = features.replace("y", yPosition);
+			features = features.replace("fs", fontSizes);
+			features = features.replace("l", textLength);
+			features = features.replace("fc", booleanToIntegerString(this.isColoured()));
+			features = features.replace("fb", booleanToIntegerString(this.isBold()));
+			return features;
+		} else {
+			return StringUtils.join(this.featureList, TextPropertyVault.getDelimiter());
+		}
 	}
 
 	public boolean hasChildren() {
@@ -177,6 +187,17 @@ public class Text implements Comparable<Text>{
 		int xDifference = getComparableIntegersForDoubleValues(textX - currentX);
 		int yDifference = getComparableIntegersForDoubleValues(textY - currentY);
 		return yDifference == 0 ? xDifference : yDifference;
+	}
+
+	public void addTo(Text text) {
+		String[] currentFeatures = this.getTextFeatures().split(TextPropertyVault.getDelimiter());
+		String[] textFeatures = text.getTextFeatures().split(TextPropertyVault.getDelimiter());
+		String[] addedTextFeatures = new String[currentFeatures.length];
+		for (int index = 0 ; index < textFeatures.length; index++ ) {
+			addedTextFeatures[index] = Float.toString(Float.parseFloat(currentFeatures[index])
+					+ Float.parseFloat(textFeatures[index]));
+		}
+		this.featureList = addedTextFeatures;
 	}
 
 	private int getComparableIntegersForDoubleValues(double difference) {
