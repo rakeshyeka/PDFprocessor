@@ -19,6 +19,24 @@ public class PageCluster {
         this.page = page;
     }
 
+    private String serializePage(String featureFilePath) {
+        String kggFilePath = featureFilePath.replace(".txt", ClusterConstants.K_MEANS_KGG_EXTENSION);
+        this.readKGGFile(kggFilePath);
+        this.segregateClusters();
+        this.calculateCentroids();
+        String outputText = "";
+        Collections.sort(this.centroids);
+        for (Text centroid: this.centroids) {
+            int groupIndex = Integer.parseInt(centroid.toString());
+            List<Text> group = this.clusterGroups.get(groupIndex);
+            Collections.sort(group);
+            for (Text text : group) {
+            }
+        }
+
+        return outputText;
+    }
+
     public void readKGGFile(String inputKggFilePath) {
         List<String> kggFileContent = new ArrayList<String>();
         try {
@@ -57,6 +75,7 @@ public class PageCluster {
                 groupCentroid.addTo(groupElement);
             }
 
+            groupCentroid.divide(group.size());
             groupCentroid.setData(Integer.toString(groupIndex));
             this.centroids.add(groupCentroid);
             groupIndex++;

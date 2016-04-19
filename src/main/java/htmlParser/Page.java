@@ -70,7 +70,9 @@ public class Page {
 
 	public String toString() {
 		String text = "";
-		sortTextContent();
+		if (HtmlToTextProcessor.getConfig().isSortContent()) {
+			sortTextContent();
+		}
 		return processTextEntities(text, this.content);
 	}
 

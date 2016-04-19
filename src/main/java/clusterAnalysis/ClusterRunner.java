@@ -21,25 +21,12 @@ public class ClusterRunner {
         runKmeansClusering(featureFile, outputPath, k);
     }
 
-    private static int identifyNumberOfMeansUsingPCAAnalysisResult(File featureFile, String outputPath) {
-        String geneFile = Util.pathJoin(outputPath, featureFile.getName());
-        geneFile = geneFile.replace(".txt", ClusterConstants.PCA_PC_TXT_EXTENSION);
-        int k = 0;
-        try {
-            List<String> contentLines = Util.readContentFromFilePath(geneFile);
-            k = extractKfromPcaAnalysisContent(contentLines);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return k;
-    }
-
     public static int extractKfromPcaAnalysisContent(List<String> contentLines) {
         int k = 3;
         Iterator<String> linesIterator = contentLines.iterator();
         List<Float> principleComponents = new ArrayList<Float>();
         float eigenValueSum = 0;
-        for (int index = 2; linesIterator.hasNext(); index++) {
+        for (int index = 0; linesIterator.hasNext(); index++) {
             String line = linesIterator.next();
             String[] lineSplitValues = line.split("\t");
             if (index >= 2) {
@@ -59,8 +46,21 @@ public class ClusterRunner {
         return k;
     }
 
+    private static int identifyNumberOfMeansUsingPCAAnalysisResult(File featureFile, String outputPath) {
+        String geneFile = Util.pathJoin(outputPath, featureFile.getName());
+        geneFile = geneFile.replace(".txt", ClusterConstants.PCA_PC_TXT_EXTENSION);
+        int k = 0;
+        try {
+            List<String> contentLines = Util.readContentFromFilePath(geneFile);
+            k = extractKfromPcaAnalysisContent(contentLines);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return k;
+    }
+
     private static boolean currentEigenSumLesserThanThreshold(float currentEigenSum, float eigenValueSum) {
-        float eigenContribution = (currentEigenSum/eigenValueSum) * 100;
+        float eigenContribution = (currentEigenSum / eigenValueSum) * 100;
         return eigenContribution < ClusterConstants.EIGEN_THRESHOLD_PERCENT;
     }
 

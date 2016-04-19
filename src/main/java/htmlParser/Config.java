@@ -35,9 +35,11 @@ public class Config {
 
     private boolean isMixedLanguage = false;
     private String inputFolder;
+    private String intermediateFolder;
     private String outputFolder;
     private boolean paragraphForBold;
     private boolean paragraphForColoured;
+    private boolean sortContent;
 
     public Config() {
     }
@@ -124,5 +126,21 @@ public class Config {
 
     public void setParagraphForColoured(boolean paragraphForColoured) {
         this.paragraphForColoured = paragraphForColoured;
+    }
+
+    public boolean isSortContent() {
+        return sortContent;
+    }
+
+    public void setSortContent(boolean sortContent) {
+        this.sortContent = sortContent;
+    }
+
+    public String getIntermediateFolder() {
+        return intermediateFolder;
+    }
+
+    public void setIntermediateFolder(String intermediateFolder) {
+        this.intermediateFolder = intermediateFolder;
     }
 }

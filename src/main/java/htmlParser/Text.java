@@ -29,7 +29,7 @@ public class Text implements Comparable<Text>{
 	private boolean isFooterBoundary;
 	private boolean containsBold;
 	private List<Text> children = null;
-	private Map<String, String> classes = null;
+	private Map<String, String> classes = new HashMap<String, String>();;
 	private Element rawElement = null;
 	private String[] featureList;
 
@@ -38,7 +38,6 @@ public class Text implements Comparable<Text>{
 	private String fontConvertor;
 
 	public Text(){
-		classes = new HashMap<String, String>();
 	}
 
 	public Text(String[] featureList) {
@@ -196,6 +195,16 @@ public class Text implements Comparable<Text>{
 		for (int index = 0 ; index < textFeatures.length; index++ ) {
 			addedTextFeatures[index] = Float.toString(Float.parseFloat(currentFeatures[index])
 					+ Float.parseFloat(textFeatures[index]));
+		}
+		this.featureList = addedTextFeatures;
+	}
+
+
+	public void divide(int num) {
+		String[] currentFeatures = this.getTextFeatures().split(TextPropertyVault.getDelimiter());
+		String[] addedTextFeatures = new String[currentFeatures.length];
+		for (int index = 0 ; index < currentFeatures.length; index++ ) {
+			addedTextFeatures[index] = Float.toString(Float.parseFloat(currentFeatures[index]) / num);
 		}
 		this.featureList = addedTextFeatures;
 	}
