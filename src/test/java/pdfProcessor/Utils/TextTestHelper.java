@@ -44,7 +44,7 @@ public class TextTestHelper {
     public static Map<String, Float> getRandomMap() {
         Map<String, Float> map = new HashMap<String, Float>();
         int sizeOfMap = TestData.randomNaturalNumber();
-        for (int i=0; i < sizeOfMap; i++) {
+        for (int i = 0; i < sizeOfMap; i++) {
             map.put(TestData.randomString(), TestData.randomFloat());
         }
         return map;
@@ -54,7 +54,7 @@ public class TextTestHelper {
         int mapSize = map.size();
         int randomKeyIndex = TestData.randomNaturalNumber(mapSize);
         Object key = null;
-        for (int i=0; i< randomKeyIndex; i++) {
+        for (int i = 0; i < randomKeyIndex; i++) {
             key = map.keySet().iterator().next();
         }
         return (String) key;
@@ -94,9 +94,9 @@ public class TextTestHelper {
         TextPropertyVault.getFontSizes().put(fontSizeClass, fontSize);
 
         Text textEntity = new Text();
-        textEntity.getClasses().put("x",xPosClass);
-        textEntity.getClasses().put("y",yPosClass);
-        textEntity.getClasses().put("fs",fontSizeClass);
+        textEntity.getClasses().put("x", xPosClass);
+        textEntity.getClasses().put("y", yPosClass);
+        textEntity.getClasses().put("fs", fontSizeClass);
         textEntity.setData(TestData.randomString(Integer.parseInt(features[3])));
         textEntity.setColoured(BooleanUtils.toBoolean(Integer.parseInt(features[4])));
         textEntity.setBold(BooleanUtils.toBoolean(Integer.parseInt(features[5])));

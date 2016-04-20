@@ -50,7 +50,7 @@ public class HtmlFeatureExtractor extends FolderWalker {
         String outputFile = Util.pathJoin(outputFilePath, Integer.toString(pageNumber));
         outputFile = outputFile + OUTPUT_FILE_EXTENSION;
         ContentFileWriter contentFileAppender = new ContentFileWriter(outputFile, true);
-        contentFileAppender.write("ID\t"+ TextPropertyVault.getFeatureListFormat());
+        contentFileAppender.write("ID\t" + TextPropertyVault.getFeatureListFormat());
         SequenceFile.Writer writer = getVectorFileWriter(outputFile);
         Iterator<Text> textIterator = page.getTextIterator();
         int counter = 0;
@@ -58,13 +58,12 @@ public class HtmlFeatureExtractor extends FolderWalker {
             Text text = textIterator.next();
             String textFeatures = text.getTextFeatures();
             //writeVectorsToFileForMahout(textFeatures, writer);
-            contentFileAppender.write(Integer.toString(counter)+"\t"+textFeatures);
-            counter+=1;
+            contentFileAppender.write(Integer.toString(counter) + "\t" + textFeatures);
+            counter += 1;
         }
         contentFileAppender.close();
         ClusterRunner.extractClusters(outputFile, outputFilePath);
     }
-
 
     private static void parseFileAndExtractTextFeatures(String fileName, String inputFile, String outputPath) {
         DomParser domParser = new DomParser(inputFile);
@@ -83,16 +82,16 @@ public class HtmlFeatureExtractor extends FolderWalker {
         try {
             fs = FileSystem.get(conf);
             writer = new SequenceFile.Writer(fs, conf, path, LongWritable.class, VectorWritable.class);
-        } catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return writer;
     }
 
-    private static void writeVectorsToFileForMahout(String textFeatures, SequenceFile.Writer writer){
+    private static void writeVectorsToFileForMahout(String textFeatures, SequenceFile.Writer writer) {
         String[] stringFeatures = textFeatures.split(", ");
         double[] doubleFeatures = new double[stringFeatures.length];
-        for (int i=0; i < stringFeatures.length; i++) {
+        for (int i = 0; i < stringFeatures.length; i++) {
             doubleFeatures[i] = Double.valueOf(stringFeatures[i]);
         }
         DenseVector vector = new DenseVector(doubleFeatures);
