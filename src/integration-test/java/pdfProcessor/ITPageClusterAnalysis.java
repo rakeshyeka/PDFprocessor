@@ -3,12 +3,11 @@ package pdfProcessor;
 import clusterAnalysis.ClusterConstants;
 import htmlParser.Util;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
-import clusterAnalysis.ClusterRunner;
+import clusterAnalysis.ClusterAnalysisHelper;
 import java.io.File;
 
-public class ITClusterAnalysis extends BaseTest {
+public class ITPageClusterAnalysis extends BaseTest {
     private File inputFile;
     private static final String TEMP_PATH = "/tmp";
 
@@ -19,7 +18,7 @@ public class ITClusterAnalysis extends BaseTest {
 
     @Test
     public void clusterAnalysisShouldRunPCAAndKMeans(){
-        ClusterRunner.extractClusters(inputFile.getAbsolutePath(), TEMP_PATH);
+        int k = ClusterAnalysisHelper.extractClusters(inputFile.getAbsolutePath(), TEMP_PATH);
 
         verifyPCAIsRun();
     }

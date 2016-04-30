@@ -1,7 +1,7 @@
 package pdfProcessor;
 
 import clusterAnalysis.ClusterConstants;
-import clusterAnalysis.ClusterRunner;
+import clusterAnalysis.ClusterAnalysisHelper;
 import org.junit.Before;
 import org.junit.Test;
 import pdfProcessor.Utils.TestData;
@@ -11,7 +11,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ClusterRunnerTest extends BaseTest{
+public class ClusterAnalysisHelperTest extends BaseTest{
 
     private static final float BIAS = (float) 0.1;
 
@@ -24,7 +24,7 @@ public class ClusterRunnerTest extends BaseTest{
     public void extractKfromPcaAnalysisContentShouldReturnK() {
         int expectedK = TestData.randomNaturalNumber();
         List<String> eigenPC = generateValidEigenPC(expectedK);
-        int outputK = ClusterRunner.extractKfromPcaAnalysisContent(eigenPC);
+        int outputK = ClusterAnalysisHelper.extractKfromPcaAnalysisContent(eigenPC);
         assertThat(outputK).isEqualTo(expectedK);
     }
 

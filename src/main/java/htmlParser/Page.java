@@ -2,6 +2,7 @@ package htmlParser;
 
 import java.util.*;
 
+import clusterAnalysis.PageCluster;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.math.util.DoubleArray;
@@ -70,9 +71,6 @@ public class Page {
 
 	public String toString() {
 		String text = "";
-		if (HtmlToTextProcessor.getConfig().isSortContent()) {
-			sortTextContent();
-		}
 		return processTextEntities(text, this.content);
 	}
 
@@ -89,6 +87,17 @@ public class Page {
 		return content.iterator();
 	}
 
+	public void setContent( List<Text> content) {
+		this.content = content;
+	}
+
+	public void sortTextAndRemoveDuplicateContent() {
+
+		if (HtmlToTextProcessor.getConfig().isSortContent()) {
+			Collections.sort(this.content);
+			removeDuplicates();
+		}
+	}
 
 	private String processTextEntities(String text, List<Text> content) {
 		int prevBold = -2;
@@ -110,11 +119,6 @@ public class Page {
 			}
 		}
 		return text;
-	}
-
-	private void sortTextContent() {
-		Collections.sort(this.content);
-		removeDuplicates();
 	}
 
 	private void removeDuplicates() {

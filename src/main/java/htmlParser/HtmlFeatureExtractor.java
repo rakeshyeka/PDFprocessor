@@ -1,6 +1,5 @@
 package htmlParser;
 
-import clusterAnalysis.ClusterRunner;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
@@ -43,7 +42,7 @@ public class HtmlFeatureExtractor extends FolderWalker {
         htmlFeatureExtractor.execute();
     }
 
-    public static void parsePageAndExtractTextFeatures(String fileName, String outputPath, Page page) {
+    public static String parsePageAndExtractTextFeatures(String fileName, String outputPath, Page page) {
         int pageNumber = page.getPageNumber();
         fileName = fileName.replace(".html", "");
         String outputFilePath = Util.pathJoin(outputPath, fileName);
@@ -62,7 +61,7 @@ public class HtmlFeatureExtractor extends FolderWalker {
             counter += 1;
         }
         contentFileAppender.close();
-        ClusterRunner.extractClusters(outputFile, outputFilePath);
+        return outputFile;
     }
 
     private static void parseFileAndExtractTextFeatures(String fileName, String inputFile, String outputPath) {

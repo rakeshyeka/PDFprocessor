@@ -1,5 +1,7 @@
 package htmlParser;
 
+import clusterAnalysis.PageCluster;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
@@ -13,9 +15,9 @@ public class HtmlToTextProcessor extends FolderWalker {
         TextPropertyVault.setFeatureListFormat("x\ty");
         TextPropertyVault.setDelimiter("\t");
         Config config = new Config(false);
-        config.setInputFolder("/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology");
-        config.setIntermediateFolder("/home/rakesh/Copy/NCERT/02_5_Features/Current/Psychology");
-        config.setOutputFolder("/home/rakesh/Copy/NCERT/03_Text/Current/Psychology");
+        config.setInputFolder("/home/rakesh/Dropbox/NCERT/02_HTML/Current/Psychology");
+        config.setIntermediateFolder("/home/rakesh/Dropbox/NCERT/02_5_Features/Current/Psychology");
+        config.setOutputFolder("/home/rakesh/Dropbox/NCERT/03_Text/Current/Psychology");
         config.setParagraphForBold(true);
         config.setParagraphForColoured(true);
         setConfig(config);
@@ -31,7 +33,14 @@ public class HtmlToTextProcessor extends FolderWalker {
             parseInputFileIntoEnglishHindiOutputText(inputFilePath, engFile, hinFile);
         } else {
             String outputFile = getOutputFilePath(currentDirectoryPath, fileName, inputNode, outputNode, "");
-            parseInputFileIntoOutputText(inputFilePath, outputFile);
+            File intermediateOutputNode = new File(getConfig().getIntermediateFolder());
+            String intermediateOutputFile = getOutputFilePath(
+                    currentDirectoryPath,
+                    fileName,
+                    inputNode,
+                    intermediateOutputNode,
+                    "");
+            parseInputFileIntoOutputText(inputFilePath, outputFile, intermediateOutputFile);
         }
     }
 
@@ -53,17 +62,35 @@ public class HtmlToTextProcessor extends FolderWalker {
         hindiFileWriter.close();
     }
 
-    private static void parseInputFileIntoOutputText(String inputFile, String outputFile) {
-        DomParser dom = new DomParser(inputFile);
+    private static void parseInputFileIntoOutputText(
+            String inputFilePath,
+            String outputFile,
+            String intermediateOutputFilePath) {
+        DomParser dom = new DomParser(inputFilePath);
         Iterator<Page> pagesIterator = dom.getPagesIterator();
+        ContentFileWriter fileWriter = new ContentFileWriter(outputFile, false);
+        File inputFile = new File(inputFilePath);
+        File intermediateOutputFile = new File(intermediateOutputFilePath);
         while (pagesIterator.hasNext()) {
             Page currentPage = pagesIterator.next();
-            HtmlFeatureExtractor.parsePageAndExtractTextFeatures(inputFile, outputFile, currentPage);
+            String inputFileName = inputFile.getName();
+            String pageOutputFile = HtmlFeatureExtractor.parsePageAndExtractTextFeatures(
+                    inputFileName, intermediateOutputFile.getParent(), currentPage);
+            inputFileName = inputFileName.replace(".html", "");
+            String clusterOutputFilePath = Util.pathJoin(intermediateOutputFile.getParent(), inputFileName);
+
+            PageCluster pageCluster = new PageCluster(currentPage);
+            pageCluster.runCluster3ForFile(pageOutputFile, clusterOutputFilePath);
+            pageCluster.getPage().sortTextAndRemoveDuplicateContent();
+            pageCluster.serializePage(pageOutputFile);
+
+            fileWriter.write(Util.newLineJoin(
+                    Constants.PAGE_DECORATION_BOUNDARY, pageCluster.getPage().toString()));
+            fileWriter.write("\n");
         }
 
-        String pages = dom.getPages();
-        ContentFileWriter fileWriter = new ContentFileWriter(outputFile, false);
-        fileWriter.write(pages);
+        /*String pages = dom.getPages();
+        fileWriter.write(pages);*/
         fileWriter.close();
     }
 

@@ -9,16 +9,17 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Level;
 
-public class ClusterRunner {
+public class ClusterAnalysisHelper {
 
     private static final String PCA_COMMAND = "cluster -f %s -g 7 -pg -u %s";
     private static final String K_MEANS_COMMAND = "cluster -f %s -k %s -r 10 -g 7 -u %s";
 
-    public static void extractClusters(String pageFeatureFilePath, String outputPath) {
+    public static int extractClusters(String pageFeatureFilePath, String outputPath) {
         File featureFile = new File(pageFeatureFilePath);
         runPCA(featureFile, outputPath);
         int k = identifyNumberOfMeansUsingPCAAnalysisResult(featureFile, outputPath);
         runKmeansClusering(featureFile, outputPath, k);
+        return k;
     }
 
     public static int extractKfromPcaAnalysisContent(List<String> contentLines) {

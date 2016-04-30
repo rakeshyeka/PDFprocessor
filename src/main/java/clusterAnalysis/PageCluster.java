@@ -14,27 +14,31 @@ public class PageCluster {
     private Map<Integer, Integer> kgg = new HashMap<Integer, Integer>();
     private List<Text> centroids = new ArrayList<Text>();
     private Page page;
+    private int k;
 
     public PageCluster(Page page) {
         this.page = page;
     }
 
-    private String serializePage(String featureFilePath) {
-        String kggFilePath = featureFilePath.replace(".txt", ClusterConstants.K_MEANS_KGG_EXTENSION);
+    public void runCluster3ForFile(String pageFeatureFilePath, String outputPath) {
+        this.k = ClusterAnalysisHelper.extractClusters(pageFeatureFilePath, outputPath);
+    }
+
+    public void serializePage(String featureFilePath) {
+        String kggFilePath = featureFilePath.replace(".txt",
+                String.format(ClusterConstants.K_MEANS_KGG_EXTENSION, Integer.toString(k)));
         this.readKGGFile(kggFilePath);
         this.segregateClusters();
         this.calculateCentroids();
-        String outputText = "";
+        List<Text> serialContent = new ArrayList<Text>();
         Collections.sort(this.centroids);
         for (Text centroid: this.centroids) {
             int groupIndex = Integer.parseInt(centroid.toString());
             List<Text> group = this.clusterGroups.get(groupIndex);
             Collections.sort(group);
-            for (Text text : group) {
-            }
+            serialContent.addAll(group);
         }
-
-        return outputText;
+        this.page.setContent(serialContent);
     }
 
     public void readKGGFile(String inputKggFilePath) {
@@ -82,6 +86,34 @@ public class PageCluster {
         }
     }
 
+    public Page getPage(){
+        return this.page;
+    }
+
+    public void sortTextContent(List<Text> content) {
+        Collections.sort(content);
+        removeDuplicates(content);
+    }
+
+    private void removeDuplicates(List<Text> content) {
+
+        List<Text> toRemoveList = new ArrayList<Text>();
+        for (int index = 0, nextIndex = index + 1;
+             index < content.size() && nextIndex < content.size();){
+            Text currentText = content.get(index);
+            Text nextText = content.get(nextIndex);
+            if (currentText.compareTo(nextText) == 0) {
+                toRemoveList.add(nextText);
+                nextIndex++;
+            } else {
+                index++;
+                nextIndex = index+1;
+            }
+        }
+
+        content.removeAll(toRemoveList);
+    }
+
     private Text getZeroFeatureTextElement() {
         String[] emptyFeatures = TextPropertyVault.getFeatureListFormat().split(
                 TextPropertyVault.getDelimiter());
@@ -90,5 +122,13 @@ public class PageCluster {
         }
 
         return new Text(emptyFeatures);
+    }
+
+    public int getK(){
+        return this.k;
+    }
+
+    public void setK(int k) {
+        this.k = k;
     }
 }
