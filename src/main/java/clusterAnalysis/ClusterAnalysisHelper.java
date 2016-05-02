@@ -12,7 +12,7 @@ import java.util.logging.Level;
 public class ClusterAnalysisHelper {
 
     private static final String PCA_COMMAND = "cluster -f %s -g 7 -pg -u %s";
-    private static final String K_MEANS_COMMAND = "cluster -f %s -k %s -r 10 -g 7 -u %s";
+    private static final String K_MEANS_COMMAND = "cluster -f %s -k %s -r 30 -g 7 -u %s";
 
     public static int extractClusters(String pageFeatureFilePath, String outputPath) {
         File featureFile = new File(pageFeatureFilePath);

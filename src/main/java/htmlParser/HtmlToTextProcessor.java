@@ -12,14 +12,15 @@ public class HtmlToTextProcessor extends FolderWalker {
 
     @Override
     public void updateConfig() {
-        TextPropertyVault.setFeatureListFormat("x\ty");
+        TextPropertyVault.setFeatureListFormat("x\ty\tfs\tl\tfc\tfb");
         TextPropertyVault.setDelimiter("\t");
         Config config = new Config(false);
-        config.setInputFolder("/home/rakesh/Dropbox/NCERT/02_HTML/Current/Psychology");
-        config.setIntermediateFolder("/home/rakesh/Dropbox/NCERT/02_5_Features/Current/Psychology");
-        config.setOutputFolder("/home/rakesh/Dropbox/NCERT/03_Text/Current/Psychology");
+        config.setInputFolder("/home/rakesh/Dropbox/NCERT/02_HTML/Current/Psychology/Psychology-XI/temp");
+        config.setIntermediateFolder("/home/rakesh/Dropbox/NCERT/02_5_Features/Current/Psychology/Psychology-XI/temp");
+        config.setOutputFolder("/home/rakesh/Dropbox/NCERT/03_Text/Current/Psychology/Psychology-XI/temp");
         config.setParagraphForBold(true);
         config.setParagraphForColoured(true);
+        config.setSortContent(true);
         setConfig(config);
     }
 
@@ -73,6 +74,7 @@ public class HtmlToTextProcessor extends FolderWalker {
         File intermediateOutputFile = new File(intermediateOutputFilePath);
         while (pagesIterator.hasNext()) {
             Page currentPage = pagesIterator.next();
+            currentPage.sortTextAndRemoveDuplicateContent();
             String inputFileName = inputFile.getName();
             String pageOutputFile = HtmlFeatureExtractor.parsePageAndExtractTextFeatures(
                     inputFileName, intermediateOutputFile.getParent(), currentPage);
@@ -81,7 +83,6 @@ public class HtmlToTextProcessor extends FolderWalker {
 
             PageCluster pageCluster = new PageCluster(currentPage);
             pageCluster.runCluster3ForFile(pageOutputFile, clusterOutputFilePath);
-            pageCluster.getPage().sortTextAndRemoveDuplicateContent();
             pageCluster.serializePage(pageOutputFile);
 
             fileWriter.write(Util.newLineJoin(

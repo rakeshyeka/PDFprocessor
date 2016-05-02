@@ -8,6 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.commons.math.util.DoubleArray;
 import org.apache.mahout.math.DenseVector;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 
 public class Page {
 	private boolean isHindi;
@@ -20,9 +21,15 @@ public class Page {
 
 	public Page(Element el) {
 		if (el != null && el.childNodeSize() > 0) {
-			for (Element child : el.getElementsByClass("t")) {
-				Text textEntity = new Text(child, false, null);
-				content.add(textEntity);
+			List<Element> children = el.children();
+			for (Element child : children) {
+				String classAttribute = child.attr("class");
+				String tag = child.tagName();
+				if (tag.equals("div") &&
+						classAttribute.startsWith("t") && !classAttribute.startsWith("c")) {
+					Text textEntity = new Text(child, false, null);
+					content.add(textEntity);
+				}
 			}
 		}
 		this.setHindi();
@@ -31,7 +38,7 @@ public class Page {
 	public static List<Page> buildPageFromNodeList(Element element) {
 		List<Page> pageList = new ArrayList<Page>();
 		int pageNumber = 1;
-		for (Element child : element.getElementsByClass("pf")) {
+		for (Element child : element.getElementsByClass("pc")) {
 			Page page = new Page(child);
 			page.setPageNumber(pageNumber);
 			pageList.add(page);
