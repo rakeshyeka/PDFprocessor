@@ -16,9 +16,11 @@ public class ClusterAnalysisHelper {
 
     public static int extractClusters(String pageFeatureFilePath, String outputPath) {
         File featureFile = new File(pageFeatureFilePath);
-        runPCA(featureFile, outputPath);
-        int k = identifyNumberOfMeansUsingPCAAnalysisResult(featureFile, outputPath);
+        //runPCA(featureFile, outputPath);
+        //int k = identifyNumberOfMeansUsingPCAAnalysisResult(featureFile, outputPath);
+        int k = 7;
         runKmeansClusering(featureFile, outputPath, k);
+        //runHierarchicalClustering(featureFile, outputPath);
         return k;
     }
 

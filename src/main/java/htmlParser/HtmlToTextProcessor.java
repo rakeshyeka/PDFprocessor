@@ -82,8 +82,8 @@ public class HtmlToTextProcessor extends FolderWalker {
             String clusterOutputFilePath = Util.pathJoin(intermediateOutputFile.getParent(), inputFileName);
 
             PageCluster pageCluster = new PageCluster(currentPage);
-            pageCluster.runCluster3ForFile(pageOutputFile, clusterOutputFilePath);
-            pageCluster.serializePage(pageOutputFile);
+            pageCluster.runHierarchicalClusterForFile(pageOutputFile, clusterOutputFilePath);
+            pageCluster.serializePageUsingHierarchical(pageOutputFile);
 
             fileWriter.write(Util.newLineJoin(
                     Constants.PAGE_DECORATION_BOUNDARY, pageCluster.getPage().toString()));

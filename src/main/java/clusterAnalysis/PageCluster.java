@@ -1,10 +1,13 @@
 package clusterAnalysis;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import htmlParser.Page;
 import htmlParser.Text;
 import htmlParser.TextPropertyVault;
 import htmlParser.Util;
+import org.apache.commons.lang3.tuple.Pair;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
@@ -12,7 +15,7 @@ public class PageCluster {
 
     private List<List<Text>> clusterGroups = new ArrayList<List<Text>>();
     private Map<Integer, Integer> kgg = new HashMap<Integer, Integer>();
-    private List<Text> centroids = new ArrayList<Text>();
+    private List<Text> groupIndexNodes = new ArrayList<Text>();
     private Page page;
     private int k;
 
@@ -24,15 +27,39 @@ public class PageCluster {
         this.k = ClusterAnalysisHelper.extractClusters(pageFeatureFilePath, outputPath);
     }
 
+    public static void runHierarchicalClusterForFile(String pageFeatureFilePath, String outputPath) {
+        File featureFile = new File(pageFeatureFilePath);
+
+        HierarchicalClusterAnalysisHelper.runHierarchicalClustering(featureFile, outputPath);
+    }
+
     public void serializePage(String featureFilePath) {
         String kggFilePath = featureFilePath.replace(".txt",
                 String.format(ClusterConstants.K_MEANS_KGG_EXTENSION, Integer.toString(k)));
         this.readKGGFile(kggFilePath);
         this.segregateClusters();
-        this.calculateCentroids();
+        this.calculatePrimaryNodesAsIndexNodes();
         List<Text> serialContent = new ArrayList<Text>();
-        Collections.sort(this.centroids);
-        for (Text centroid: this.centroids) {
+        Collections.sort(this.groupIndexNodes);
+        for (Text centroid: this.groupIndexNodes) {
+            int groupIndex = Integer.parseInt(centroid.toString());
+            List<Text> group = this.clusterGroups.get(groupIndex);
+            Collections.sort(group);
+            serialContent.addAll(group);
+        }
+        this.page.setContent(serialContent);
+    }
+
+    public void serializePageUsingHierarchical(String featureFilePath) {
+        String gtrFilePath = featureFilePath.replace(".txt",
+                ClusterConstants.HIERARCHICAL_GTR_EXTENSION);
+        HierarchicalClusterAnalysisHelper hierarchicalClusterer = new HierarchicalClusterAnalysisHelper();
+        hierarchicalClusterer.readGTRFile(gtrFilePath);
+        hierarchicalClusterer.parseGTR(this.clusterGroups, this.page.getContent());
+        this.calculatePrimaryNodesAsIndexNodes();
+        List<Text> serialContent = new ArrayList<Text>();
+        Collections.sort(this.groupIndexNodes);
+        for (Text centroid: this.groupIndexNodes) {
             int groupIndex = Integer.parseInt(centroid.toString());
             List<Text> group = this.clusterGroups.get(groupIndex);
             Collections.sort(group);
@@ -71,7 +98,18 @@ public class PageCluster {
         }
     }
 
-    public void calculateCentroids() {
+    public void calculatePrimaryNodesAsIndexNodes() {
+        int groupIndex = 0;
+        for (List<Text> group: this.clusterGroups) {
+            Text groupCentroid = getZeroFeatureTextElement();
+            this.groupIndexNodes.add(groupCentroid);
+            groupCentroid.setData(Integer.toString(groupIndex));
+            groupCentroid.addTo(group.get(0));
+            groupIndex++;
+        }
+    }
+
+    public void calculateCentroidsAsIndexNodes() {
         int groupIndex = 0;
         for (List<Text> group: this.clusterGroups) {
             Text groupCentroid = getZeroFeatureTextElement();
@@ -81,7 +119,7 @@ public class PageCluster {
 
             groupCentroid.divide(group.size());
             groupCentroid.setData(Integer.toString(groupIndex));
-            this.centroids.add(groupCentroid);
+            this.groupIndexNodes.add(groupCentroid);
             groupIndex++;
         }
     }
