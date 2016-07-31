@@ -122,7 +122,7 @@ public class Page {
                 if (HtmlToTextProcessor.getConfig().isParagraphForBold()
                         || HtmlToTextProcessor.getConfig().isParagraphForColoured()) {
                     Pair<String, Integer> responsePair = addBoundaryToText(textEntity, text,
-                            Constants.BLOCK_DECORATION_BOUNDARY, i, prevBold);
+                            "" , i, prevBold);
                     text = responsePair.getLeft();
                     prevBold = responsePair.getRight();
                 }

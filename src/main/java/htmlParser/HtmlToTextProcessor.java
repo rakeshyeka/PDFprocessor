@@ -15,9 +15,9 @@ public class HtmlToTextProcessor extends FolderWalker {
         TextPropertyVault.setFeatureListFormat("x\ty\tfs\tl\tfc\tfb");
         TextPropertyVault.setDelimiter("\t");
         Config config = new Config(false);
-        config.setInputFolder("/home/rakesh/Dropbox/NCERT/02_HTML/Current/Psychology/Psychology-XI/temp");
-        config.setIntermediateFolder("/home/rakesh/Dropbox/NCERT/02_5_Features/Current/Psychology/Psychology-XI/temp");
-        config.setOutputFolder("/home/rakesh/Dropbox/NCERT/03_Text/Current/Psychology/Psychology-XI/temp");
+        config.setInputFolder("/home/rakesh/Dropbox/NCERT/02_HTML/Current/");
+        config.setIntermediateFolder("/home/rakesh/Dropbox/NCERT/02_5_Features/Current/");
+        config.setOutputFolder("/home/rakesh/Dropbox/NCERT/03_Text/Current/");
         config.setParagraphForBold(true);
         config.setParagraphForColoured(true);
         config.setSortContent(true);
@@ -86,8 +86,7 @@ public class HtmlToTextProcessor extends FolderWalker {
             pageCluster.serializePageUsingHierarchical(pageOutputFile);
 
             fileWriter.write(Util.newLineJoin(
-                    Constants.PAGE_DECORATION_BOUNDARY, pageCluster.getPage().toString()));
-            fileWriter.write("\n");
+                    "", pageCluster.getPage().toString()));
         }
 
         /*String pages = dom.getPages();

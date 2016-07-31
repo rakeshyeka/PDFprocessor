@@ -184,8 +184,10 @@ public class Text implements Comparable<Text> {
         double currentY = Float.parseFloat(currentFeatures[1]);
         double textX = Float.parseFloat(textFeatures[0]);
         double textY = Float.parseFloat(textFeatures[1]);
-        int xDifference = getComparableIntegersForDoubleValues(textX - currentX);
-        int yDifference = getComparableIntegersForDoubleValues(textY - currentY);
+        int xDifference = getComparableIntegersForDoubleValues(currentX - textX);
+        int yDifference = getComparableIntegersForDoubleValues(currentY - textY);
+        // invering ydifference as y is measured from bottom instead of top.
+        yDifference = -1* yDifference;
         return yDifference == 0 ? xDifference : yDifference;
     }
 
@@ -214,7 +216,7 @@ public class Text implements Comparable<Text> {
         boolean isNegative = difference < 0;
         double absDifference = Math.abs(difference);
         int result = 0;
-        if (absDifference > 1) {
+        if (absDifference > 6) {
             result = isNegative ? -1 : 1;
         }
         return result;

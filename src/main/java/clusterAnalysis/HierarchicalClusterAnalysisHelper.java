@@ -39,7 +39,7 @@ public class HierarchicalClusterAnalysisHelper {
             e.printStackTrace();
         }
 
-        for (int index = 1; index < gtrFileContent.size(); index++) {
+        for (int index = 0; index < gtrFileContent.size(); index++) {
             String line = gtrFileContent.get(index);
             String[] splits = line.split("\t");
             int[] head = getIndexAndType(splits[0]);
@@ -58,27 +58,10 @@ public class HierarchicalClusterAnalysisHelper {
         List<Text> totalChildPoints = new ArrayList<Text>();
 
         // left child
-        int leftChildIndex = (int) entry[0];
-        if (entry[1] == 1) {
-            // isLeaf
-            leftChildPoints = new ArrayList<Text>();
-            leftChildPoints.add(this.content.get(leftChildIndex));
-        } else {
-            leftChildPoints = recurseTree(leftChildIndex);
-        }
+        leftChildPoints = processChildAndFetchChildNodes(entry[0], entry[1]);
 
         // right child
-        int rightChildIndex = (int) entry[2];
-        if (entry[3] == 1) {
-            // isLeaf
-            rightChildPoints = new ArrayList<Text>();
-            rightChildPoints.add(this.content.get(rightChildIndex));
-        } else {
-            rightChildPoints = recurseTree(rightChildIndex);
-        }
-
-        totalChildPoints.addAll(leftChildPoints);
-        totalChildPoints.addAll(rightChildPoints);
+        rightChildPoints = processChildAndFetchChildNodes(entry[2], entry[3]);
 
         if (entry[4] < GROUP_CLUSTERING_THRESHOLD
                 || leftChildPoints == null
@@ -91,15 +74,34 @@ public class HierarchicalClusterAnalysisHelper {
             }
 
             return null;
+        } else {
+            totalChildPoints.addAll(leftChildPoints);
+            totalChildPoints.addAll(rightChildPoints);
         }
 
         return totalChildPoints;
     }
 
+    private List<Text> processChildAndFetchChildNodes(float floatChildIndex, float isLeaf) {
+        List<Text> childPoints;
+        int childIndex = (int) floatChildIndex;
+        if (isLeaf == 1) {
+            // isLeaf
+            childPoints = new ArrayList<Text>();
+            childPoints.add(this.content.get(childIndex));
+        } else {
+            childPoints = recurseTree(childIndex);
+        }
+        return childPoints;
+    }
+
     private int[] getIndexAndType(String Node) {
-        String index = Util.substringRegex(Node, "(?!Node)[0-9]+(?=X)");
+        String index = Util.substringRegex(Node, "(?<=GENE)[0-9]+(?=X)");
         Boolean isLeaf = index != null;
-        index = Util.substringRegex(Node, "(?!GENE)[0-9]+(?=X)");
+        if (!isLeaf) {
+            index = Util.substringRegex(Node, "(?<=NODE)[0-9]+(?=X)");
+        }
+
         return new int[]{
                 Integer.parseInt(index),
                 isLeaf ? 1:0};

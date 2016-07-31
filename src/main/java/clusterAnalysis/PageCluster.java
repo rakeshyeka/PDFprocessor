@@ -56,6 +56,10 @@ public class PageCluster {
         HierarchicalClusterAnalysisHelper hierarchicalClusterer = new HierarchicalClusterAnalysisHelper();
         hierarchicalClusterer.readGTRFile(gtrFilePath);
         hierarchicalClusterer.parseGTR(this.clusterGroups, this.page.getContent());
+        for (List<Text> clusterGroup: this.clusterGroups) {
+            Collections.sort(clusterGroup);
+        }
+
         this.calculatePrimaryNodesAsIndexNodes();
         List<Text> serialContent = new ArrayList<Text>();
         Collections.sort(this.groupIndexNodes);

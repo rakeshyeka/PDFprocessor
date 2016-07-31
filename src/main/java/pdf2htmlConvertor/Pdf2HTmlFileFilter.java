@@ -22,8 +22,8 @@ public class Pdf2HTmlFileFilter {
 	private static void execute() throws IOException {
 		// String inputFolder =
 		// "/home/rakesh/Copy/Constitution/Consttn/bilingual-constitution/tempPDF";
-		String inputFolder = "/home/rakesh/Copy/NCERT/01_Raw/Current/Psychology";
-		String outputFolder = "/home/rakesh/Copy/NCERT/02_HTML/Current/Psychology";
+		String inputFolder = "/home/rakesh/Dropbox/NCERT/01_Raw/Current/Biology/Biology-XII/Hindi";
+		String outputFolder = "/home/rakesh/Dropbox/NCERT/02_HTML/Current/Hindi/Biology/Biology-XII/Hindi";
 		parseFileInFolder(inputFolder, outputFolder);
 	}
 
